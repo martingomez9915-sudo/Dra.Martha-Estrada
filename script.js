@@ -1,19 +1,6 @@
 /* ===== Dra. Martha Estrada — Main Script ===== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // ===== EmailJS Init =====
-  // NOTE: Replace these with your actual EmailJS credentials
-  // 1. Go to https://www.emailjs.com/ and create a free account
-  // 2. Add an email service (Gmail) and get SERVICE_ID
-  // 3. Create an email template and get TEMPLATE_ID
-  // 4. Get your PUBLIC_KEY from Account > API Keys
-  const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-  const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-
-  if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-    emailjs.init(EMAILJS_PUBLIC_KEY);
-  }
 
   // ===== Navbar Scroll Effect =====
   const navbar = document.getElementById('navbar');
@@ -30,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.classList.toggle('active');
   });
 
-  // Close menu on link click
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       burger.classList.remove('active');
@@ -38,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Close menu on outside click
   document.addEventListener('click', (e) => {
     if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
       burger.classList.remove('active');
@@ -48,18 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== Scroll Reveal Animations =====
   const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('active');
     });
-  }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -40px 0px'
-  });
-
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
   reveals.forEach(el => revealObserver.observe(el));
 
   // ===== Testimonials Slider =====
@@ -72,22 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function goToSlide(index) {
     currentSlide = index;
     track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
   }
 
-  function nextSlide() {
-    goToSlide((currentSlide + 1) % totalSlides);
-  }
-
-  function startAutoSlide() {
-    slideInterval = setInterval(nextSlide, 5000);
-  }
-
-  function stopAutoSlide() {
-    clearInterval(slideInterval);
-  }
+  function nextSlide() { goToSlide((currentSlide + 1) % totalSlides); }
+  function startAutoSlide() { slideInterval = setInterval(nextSlide, 5000); }
+  function stopAutoSlide() { clearInterval(slideInterval); }
 
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
@@ -96,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
       startAutoSlide();
     });
   });
-
   startAutoSlide();
 
   // ===== Set minimum date for appointment =====
@@ -108,14 +75,77 @@ document.addEventListener('DOMContentLoaded', () => {
     dateInput.min = tomorrow.toISOString().split('T')[0];
   }
 
-  // ===== Appointment Form Submission =====
+  // ===== Generate .ics Calendar Reminder =====
+  function generateICS(data) {
+    const dateStr = data.preferred_date.replace(/-/g, '');
+    let startTime, endTime;
+    if (data.preferred_time.includes('Mañana')) {
+      startTime = '090000';
+      endTime = '100000';
+    } else {
+      startTime = '130000';
+      endTime = '150000';
+    }
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Dra Martha Estrada//Cita Odontológica//ES',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `DTSTART:${dateStr}T${startTime}`,
+      `DTEND:${dateStr}T${endTime}`,
+      `SUMMARY:🦷 Cita Odontológica - ${data.child_name} | Dra. Martha Estrada`,
+      `DESCRIPTION:Cita de ${data.service} para ${data.child_name} (${data.child_age} años).\\nPadre/Madre: ${data.parent_name}\\nTeléfono: ${data.phone}\\n\\n📍 Holguines Trade Center\\nCra. 100 #11-60\\, Ciudad Jardín\\, Cali\\n6to Piso\\n\\n📱 WhatsApp: +57 310 423 5804\\n📧 infantilodonto@gmail.com`,
+      'LOCATION:Holguines Trade Center\\, Cra. 100 #11-60\\, Ciudad Jardín\\, Cali\\, 6to Piso',
+      'STATUS:CONFIRMED',
+      'BEGIN:VALARM',
+      'TRIGGER:-P1D',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:Recordatorio: Mañana tiene cita odontológica para ${data.child_name} con la Dra. Martha Estrada`,
+      'END:VALARM',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT2H',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:En 2 horas: Cita odontológica para ${data.child_name} - Holguines Trade Center, 6to Piso`,
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    return icsContent;
+  }
+
+  function downloadICS(data) {
+    const ics = generateICS(data);
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Cita_Dra_Martha_Estrada_${data.child_name.replace(/\s/g, '_')}.ics`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  // ===== Appointment Form Submission via FormSubmit.co =====
+  // FormSubmit.co envía emails automáticamente SIN necesidad de crear cuenta.
+  // La PRIMERA vez que se envíe, FormSubmit enviará un correo de verificación
+  // a infantilodonto@gmail.com. Solo hay que hacer clic en "Confirm" una vez
+  // y de ahí en adelante todos los formularios llegarán automáticamente.
+
   const form = document.getElementById('appointmentForm');
   const submitBtn = document.getElementById('submitBtn');
   const formSuccess = document.getElementById('formSuccess');
+  const downloadReminderBtn = document.getElementById('downloadReminder');
+  let lastFormData = null;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // UI loading state
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
     submitBtn.querySelector('.btn-text').textContent = 'Enviando...';
@@ -129,38 +159,76 @@ document.addEventListener('DOMContentLoaded', () => {
       service: document.getElementById('service').value,
       preferred_date: document.getElementById('preferredDate').value,
       preferred_time: document.getElementById('preferredTime').value,
-      notes: document.getElementById('notes').value || 'Sin notas adicionales',
-      to_email: 'infantilodonto@gmail.com'
+      notes: document.getElementById('notes').value || 'Sin notas adicionales'
     };
 
+    lastFormData = formData;
+
     try {
-      if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-        // Send via EmailJS
-        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formData);
-      } else {
-        // Fallback: open mailto link with form data
-        const subject = encodeURIComponent(`Nueva Cita - ${formData.child_name} | ${formData.service}`);
-        const body = encodeURIComponent(
-          `🦷 NUEVA SOLICITUD DE CITA\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-          `👤 Padre/Madre: ${formData.parent_name}\n` +
-          `📱 Teléfono: ${formData.phone}\n` +
-          `📧 Email: ${formData.email}\n\n` +
-          `👶 Paciente: ${formData.child_name}\n` +
-          `🎂 Edad: ${formData.child_age} años\n\n` +
-          `🏥 Servicio: ${formData.service}\n` +
-          `📅 Fecha preferida: ${formData.preferred_date}\n` +
-          `🕐 Horario: ${formData.preferred_time}\n\n` +
-          `📝 Notas: ${formData.notes}\n`
-        );
-        window.open(`mailto:infantilodonto@gmail.com?subject=${subject}&body=${body}`, '_self');
+      // ── 1) Enviar email a la doctora via FormSubmit ──
+      const doctorResponse = await fetch('https://formsubmit.co/ajax/infantilodonto@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `🦷 Nueva Cita - ${formData.child_name} | ${formData.service}`,
+          _template: 'box',
+          _captcha: false,
+          _url: 'Consultorio Dra. Martha Estrada - SmileTrain',
+          'Padre/Madre': formData.parent_name,
+          'Teléfono': formData.phone,
+          'Email del padre': formData.email,
+          'Nombre del niño(a)': formData.child_name,
+          'Edad': formData.child_age + ' años',
+          'Servicio solicitado': formData.service,
+          'Fecha preferida': formData.preferred_date,
+          'Horario preferido': formData.preferred_time,
+          'Notas adicionales': formData.notes
+        })
+      });
+
+      // ── 2) Enviar confirmación al paciente via FormSubmit ──
+      const patientResponse = await fetch('https://formsubmit.co/ajax/' + formData.email, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: '✅ Confirmación de Cita - Dra. Martha Estrada | Odontología Infantil',
+          _template: 'box',
+          _captcha: false,
+          _url: 'Consultorio Dra. Martha Estrada - SmileTrain',
+          'Mensaje': '¡Hola ' + formData.parent_name + '! Hemos recibido tu solicitud de cita.',
+          'Paciente': formData.child_name,
+          'Servicio': formData.service,
+          'Fecha solicitada': formData.preferred_date,
+          'Horario': formData.preferred_time,
+          'Estado': '⏳ Pendiente de confirmación - Te contactaremos pronto',
+          'Ubicación': 'Holguines Trade Center, Cra. 100 #11-60, Ciudad Jardín, Cali - 6to Piso',
+          'Teléfono consultorio': '+57 310 423 5804',
+          'Nota': 'La Dra. Martha Estrada se pondrá en contacto contigo para confirmar la fecha y hora exacta de tu cita.'
+        })
+      });
+
+      const doctorOk = doctorResponse.ok;
+      const patientOk = patientResponse.ok;
+
+      if (doctorOk) {
+        console.log('✅ Email enviado a la doctora');
+      }
+      if (patientOk) {
+        console.log('✅ Email de confirmación enviado al paciente');
       }
 
-      // Show success
+      // Show success + auto-download calendar reminder
       form.style.display = 'none';
       formSuccess.classList.add('show');
+      downloadICS(formData);
 
-      // Reset after 8 seconds
+      // Reset after 12 seconds
       setTimeout(() => {
         form.style.display = 'block';
         formSuccess.classList.remove('show');
@@ -168,36 +236,39 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.classList.remove('loading');
         submitBtn.disabled = false;
         submitBtn.querySelector('.btn-text').textContent = 'Solicitar Cita →';
-      }, 8000);
+      }, 12000);
 
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error enviando formulario:', error);
 
-      // Fallback to mailto on error
-      const subject = encodeURIComponent(`Nueva Cita - ${formData.child_name} | ${formData.service}`);
-      const body = encodeURIComponent(
-        `NUEVA SOLICITUD DE CITA\n\n` +
-        `Padre/Madre: ${formData.parent_name}\n` +
-        `Teléfono: ${formData.phone}\n` +
-        `Email: ${formData.email}\n` +
-        `Paciente: ${formData.child_name}\n` +
-        `Edad: ${formData.child_age} años\n` +
-        `Servicio: ${formData.service}\n` +
-        `Fecha preferida: ${formData.preferred_date}\n` +
-        `Horario: ${formData.preferred_time}\n` +
-        `Notas: ${formData.notes}\n`
-      );
-      window.open(`mailto:infantilodonto@gmail.com?subject=${subject}&body=${body}`, '_self');
+      // Show success anyway (the reminder still downloads)
+      form.style.display = 'none';
+      formSuccess.classList.add('show');
+      downloadICS(formData);
 
-      submitBtn.classList.remove('loading');
-      submitBtn.disabled = false;
-      submitBtn.querySelector('.btn-text').textContent = 'Solicitar Cita →';
+      alert('Hubo un problema al enviar el correo. Se descargó el recordatorio. Por favor contáctanos por WhatsApp al +57 310 423 5804');
+
+      setTimeout(() => {
+        form.style.display = 'block';
+        formSuccess.classList.remove('show');
+        form.reset();
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+        submitBtn.querySelector('.btn-text').textContent = 'Solicitar Cita →';
+      }, 12000);
     }
   });
 
+  // Download reminder button (in success message)
+  if (downloadReminderBtn) {
+    downloadReminderBtn.addEventListener('click', () => {
+      if (lastFormData) downloadICS(lastFormData);
+    });
+  }
+
   // ===== Smooth scroll for all anchor links =====
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
       const target = document.querySelector(this.getAttribute('href'));
       if (target) {
         e.preventDefault();
@@ -214,7 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const text = el.textContent;
     const match = text.match(/(\d+)/);
     if (!match) return;
-
     const target = parseInt(match[0]);
     const suffix = text.replace(match[0], '');
     const duration = 2000;
@@ -223,15 +293,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function update(now) {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       const current = Math.round(target * eased);
       el.textContent = current + suffix;
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      }
+      if (progress < 1) requestAnimationFrame(update);
     }
-
     requestAnimationFrame(update);
   }
 
@@ -243,7 +309,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.5 });
 
   const heroStats = document.querySelector('.hero-stats');
-  if (heroStats) {
-    statsObserver.observe(heroStats);
-  }
+  if (heroStats) statsObserver.observe(heroStats);
 });

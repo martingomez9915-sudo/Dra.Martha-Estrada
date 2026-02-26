@@ -16,174 +16,20 @@
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦷</text></svg>">
 
   <style>
-    /* ── Contenedor de la escena ── */
-    .hero-scene {
-      width: 100%;
-      aspect-ratio: 4/3.2;
-      border-radius: 24px;
-      overflow: hidden;
-      background: linear-gradient(155deg, #dff5ef 0%, #eaf8f4 45%, #f2fbf8 100%);
-      box-shadow: 0 20px 60px rgba(46,186,160,0.16), 0 2px 8px rgba(0,0,0,0.05);
-      display: block;
-      position: relative;
-    }
-    .hero-scene svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    /* ── Filtro de sombra suave para integrar las imágenes ── */
-    .hero-scene svg image {
-      filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
-    }
-
-    /* ── Animaciones de entrada ── */
-    @keyframes dIn { 
-      from { transform: translateX(35px); opacity: 0; } 
-      to { transform: translateX(0); opacity: 1; } 
-    }
-    .gD { animation: dIn 0.65s cubic-bezier(0.4,0,0.2,1) 0.1s both; }
-
-    @keyframes cRun { 
-      0% { transform: translateX(-260px); opacity: 0; } 
-      14% { opacity: 1; } 
-      100% { transform: translateX(0); } 
-    }
-    .gC { animation: cRun 1.55s cubic-bezier(0.38,0,0.14,1) 0.2s both; }
-
-    /* ── Aparición de la mamá y el segundo niño ── */
-    .mama, .nino2 {
-      opacity: 0;
-      animation: fadeIn 1s ease 1.5s both;
-    }
-    .nino2 { animation-delay: 1.8s; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    /* ── Globo de diálogo ── */
-    .bub {
-      opacity: 0;
-      transform-origin: 375px 158px;
-      animation: bIn 0.45s ease 2.25s both;
-    }
-    @keyframes bIn { 
-      from { opacity: 0; transform: scale(0.65) translateY(5px); } 
-      to { opacity: 1; transform: scale(1) translateY(0); } 
-    }
-
-    /* ── Sparkles (destellos) ── */
-    .sp { opacity: 0; }
-    .s1 { animation: sFly 1.9s ease 2.1s infinite; transform-origin: 210px 178px; }
-    .s2 { animation: sFly 1.9s ease 2.45s infinite; transform-origin: 288px 165px; }
-    .s3 { animation: sFly 1.9s ease 2.8s infinite; transform-origin: 192px 202px; }
-    .s4 { animation: sFly 1.9s ease 3.15s infinite; transform-origin: 300px 198px; }
-    .s5 { animation: sFly 1.9s ease 3.5s infinite; transform-origin: 228px 168px; }
-    @keyframes sFly {
-      0% { opacity: 0; transform: translateY(0) scale(0.4); }
-      35% { opacity: 1; transform: translateY(-17px) scale(1); }
-      100% { opacity: 0; transform: translateY(-40px) scale(0.2); }
-    }
-
-    /* ── Pequeño balanceo para la doctora (opcional) ── */
-    .gD {
-      animation: dIn 0.65s cubic-bezier(0.4,0,0.2,1) 0.1s both, sway 3.6s ease-in-out 1.6s infinite;
-    }
-    @keyframes sway {
-      0%,100% { transform: rotate(0deg) translateY(0); }
-      40% { transform: rotate(-1deg) translateY(-2px); }
-      70% { transform: rotate(1deg) translateY(-1px); }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <a href="#" class="nav-logo">
-        <div class="logo-icon">🦷</div>
-        Dra. Martha <span>Estrada</span>
-      </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#porque">¿Por qué elegirnos?</a></li>
-        <li><a href="#testimonios">Testimonios</a></li>
-        <li><a href="#cita">Agendar Cita</a></li>
-        <li><a href="#ubicacion">Ubicación</a></li>
-        <li><a href="https://wa.me/573104235804?text=Hola, quiero agendar una cita con la Dra. Martha Estrada" target="_blank" class="nav-cta">WhatsApp</a></li>
-        <li><a href="https://www.instagram.com/Dra.MarthaEstrada1" target="_blank" class="nav-cta">Instagram</a></li>
-      </ul>
-      <div class="burger" id="burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ===== HERO ===== -->
-  <section class="hero" id="inicio">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge"><span>⭐</span> Excelencia Dental</div>
-        <h1>Cuidamos la <span class="highlight">sonrisa</span> de tus hijos con amor y experiencia</h1>
-        <p>Más de 15 años creando sonrisas saludables. Odontología infantil especializada con tecnología de vanguardia y un trato cálido para los más pequeños.</p>
-        <div class="hero-buttons">
-          <a href="#cita" class="btn-primary">📅 Agendar Cita</a>
-          <a href="#servicios" class="btn-secondary">Nuestros Servicios →</a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-item"><h3>30+</h3><p>Años de experiencia</p></div>
-          <div class="stat-item"><h3>10k+</h3><p>Sonrisas creadas</p></div>
-          <div class="stat-item"><h3>100%</h3><p>Dedicación infantil</p></div>
-        </div>
-      </div>
-
-      <div class="hero-image">
+   <div class="hero-image">
         <div class="hero-scene">
-          <svg viewBox="0 0 460 360" preserveAspectRatio="xMidYMid meet">
-            <!-- Filtro de sombra para suavizar bordes -->
-            <defs>
-              <filter id="softShadow" x="-0.05" y="-0.05" width="1.1" height="1.1">
-                <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.15" />
-              </filter>
-            </defs>
-
-            <!-- FONDO: consultorio -->
-            <image href="consultorio.png" x="0" y="0" width="460" height="360" preserveAspectRatio="xMidYMid slice" filter="url(#softShadow)" />
-
-            <!-- PUERTA (elemento decorativo) -->
-            <image href="puerta.png" x="20" y="150" width="80" height="160" preserveAspectRatio="xMidYMid meet" filter="url(#softShadow)" />
-
-            <!-- MAMÁ (estática, aparece después) -->
-            <image href="mama.png" x="50" y="190" width="70" height="120" preserveAspectRatio="xMidYMid meet" class="mama" filter="url(#softShadow)" />
-
-            <!-- NIÑO2 (segundo niño, esperando) -->
-            <image href="nino2.png" x="120" y="200" width="60" height="100" preserveAspectRatio="xMidYMid meet" class="nino2" filter="url(#softShadow)" />
-
-            <!-- DOCTORA (entra desde la derecha y se balancea) -->
-            <g class="gD">
-              <image href="doctora.png" x="280" y="150" width="100" height="180" preserveAspectRatio="xMidYMid meet" filter="url(#softShadow)" />
-            </g>
-
-            <!-- NIÑO1 (corre desde la izquierda) -->
-            <g class="gC">
-              <image href="nino1.png" x="30" y="200" width="70" height="120" preserveAspectRatio="xMidYMid meet" filter="url(#softShadow)" />
-            </g>
-
-            <!-- GLOBO DE DIÁLOGO -->
-            <image href="globo.png" x="340" y="90" width="100" height="80" preserveAspectRatio="xMidYMid meet" class="bub" filter="url(#softShadow)" />
-
-            <!-- SPARKLES (destellos de colores) -->
-            <g class="sp s1"><circle cx="210" cy="178" r="5" fill="#F2845C" /></g>
-            <g class="sp s2"><circle cx="288" cy="165" r="5" fill="#2EBAA0" /></g>
-            <g class="sp s3"><circle cx="192" cy="202" r="5" fill="#FFD166" /></g>
-            <g class="sp s4"><circle cx="300" cy="198" r="4" fill="#F2845C" /></g>
-            <g class="sp s5"><circle cx="228" cy="168" r="5" fill="#2EBAA0" /></g>
-          </svg>
+          <!--
+            FOTO REAL — doctora joven y feliz con paciente niño.
+            Fuente: Unsplash (uso libre, no requiere atribución comercial).
+            Si quieres cambiarla por la foto real de la Dra. Martha,
+            reemplaza el atributo src por la ruta de tu imagen.
+          -->
+          <img
+            src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=85&fit=crop"
+            alt="Dra. Martha Estrada — Odontóloga infantil feliz recibiendo a sus pacientes en Cali"
+            loading="eager"
+          />
         </div>
-
         <!-- Tarjetas flotantes (se mantienen igual) -->
         <div class="floating-card card-1">
           <div class="fc-icon green">😊</div>

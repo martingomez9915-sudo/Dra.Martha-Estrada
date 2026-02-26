@@ -1,6 +1,90 @@
 /* ===== IMPORTS ===== */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+/* ===== BOTONES GENERALES ===== */
 
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 119, 182, 0.35);
+}
+
+/* ===== HERO FIX ===== */
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.hero-content {
+  flex: 1;
+  min-width: 300px;
+}
+
+.hero-image {
+  flex: 1;
+  min-width: 300px;
+  position: relative;
+}
+
+/* ===== ABOUT FIX ===== */
+.about .container {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.about-content {
+  flex: 1;
+  min-width: 300px;
+}
+
+.about-content .btn-primary {
+  margin-top: 25px;
+}
+
+/* ===== FOOTER BUTTON FIX ===== */
+.footer .btn-primary {
+  margin-top: 15px;
+}
+
+/* ===== FORM BUTTON ===== */
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, #06d6a0, #00b894);
+  border: none;
+  padding: 15px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 184, 148, 0.35);
+}
+
+/* ===== RESPONSIVE FIX ===== */
+@media (max-width: 900px) {
+  .hero-container,
+  .about .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-content,
+  .about-content {
+    align-items: center;
+  }
+
+  .about-content .btn-primary {
+    align-self: center;
+  }
+}
 /* ===== DESIGN TOKENS ===== */
 :root {
   /* Colors */

@@ -175,55 +175,67 @@ ul { list-style: none; }
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 11px;
+  gap: 13px;
   flex-shrink: 0;
   text-decoration: none;
 }
 
 .nav-logo .logo-icon {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  border-radius: 11px;
+  border-radius: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   color: white;
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(46, 186, 160, 0.30);
+  box-shadow: 0 5px 18px rgba(46, 186, 160, 0.38),
+              0 1px 0 rgba(255,255,255,0.2) inset;
   transition: var(--transition);
 }
 
 .nav-logo:hover .logo-icon {
-  transform: rotate(-6deg) scale(1.05);
-  box-shadow: 0 6px 20px rgba(46, 186, 160, 0.40);
+  transform: rotate(-7deg) scale(1.08);
+  box-shadow: 0 8px 26px rgba(46, 186, 160, 0.48);
+}
+
+/* Separador vertical sutil entre icono y texto */
+.nav-logo .logo-divider {
+  width: 1.5px;
+  height: 34px;
+  background: linear-gradient(to bottom, transparent, var(--primary-light), transparent);
+  border-radius: 2px;
+  flex-shrink: 0;
 }
 
 .nav-logo .logo-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
+  line-height: 1.2;
+  gap: 1px;
 }
 
 .nav-logo .logo-text .logo-top {
   font-family: var(--font-heading);
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 500;
   color: var(--text-muted);
-  letter-spacing: 0.3px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
 
+/* Nombre con gradiente teal — el elemento más destacado */
 .nav-logo .logo-text .logo-bottom {
   font-family: var(--font-heading);
-  font-size: 1.18rem;
+  font-size: 1.28rem;
   font-weight: 800;
-  color: var(--text-dark);
-  letter-spacing: -0.01em;
-}
-
-.nav-logo .logo-text .logo-bottom span {
-  color: var(--primary);
+  letter-spacing: -0.02em;
+  background: linear-gradient(110deg, var(--primary-dark) 0%, var(--primary) 55%, #5dd9be 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ── Nav links (center) ── */
@@ -265,61 +277,84 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 
-/* WhatsApp — naranja */
-.nav-cta-wa {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 9px 20px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-  color: var(--white) !important;
-  border-radius: var(--radius-full);
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 0.84rem;
-  white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(242, 132, 92, 0.28);
-  transition: var(--transition);
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.nav-cta-wa:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 24px rgba(242, 132, 92, 0.40);
-  filter: brightness(1.04);
-}
-
-.nav-cta-wa .cta-icon { font-size: 1rem; }
-
-/* Instagram — teal */
+/* ── CTA compartido base ── */
+.nav-cta-wa,
 .nav-cta-ig {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 9px 20px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: var(--white) !important;
+  gap: 8px;
+  padding: 10px 20px 10px 12px;
   border-radius: var(--radius-full);
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 0.84rem;
   white-space: nowrap;
-  box-shadow: 0 4px 16px rgba(46, 186, 160, 0.28);
   transition: var(--transition);
   border: none;
   cursor: pointer;
   text-decoration: none;
+  color: var(--white) !important;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Shimmer sweep on hover */
+.nav-cta-wa::after,
+.nav-cta-ig::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+.nav-cta-wa:hover::after,
+.nav-cta-ig:hover::after { left: 140%; }
+
+/* ── Ícono con fondo semitransparente ── */
+.cta-icon-wrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.20);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.nav-cta-wa:hover .cta-icon-wrap,
+.nav-cta-ig:hover .cta-icon-wrap {
+  background: rgba(255, 255, 255, 0.32);
+  transform: scale(1.12);
+}
+
+/* WhatsApp — naranja cálido */
+.nav-cta-wa {
+  background: linear-gradient(135deg, #f59060, var(--accent-dark));
+  box-shadow: 0 4px 18px rgba(242, 132, 92, 0.35),
+              0 1px 0 rgba(255,255,255,0.15) inset;
+}
+.nav-cta-wa:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(242, 132, 92, 0.50),
+              0 1px 0 rgba(255,255,255,0.15) inset;
+}
+
+/* Instagram — teal vibrante */
+.nav-cta-ig {
+  background: linear-gradient(135deg, #3ecfb3, var(--primary-dark));
+  box-shadow: 0 4px 18px rgba(46, 186, 160, 0.35),
+              0 1px 0 rgba(255,255,255,0.15) inset;
+}
 .nav-cta-ig:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 24px rgba(46, 186, 160, 0.40);
-  filter: brightness(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(46, 186, 160, 0.50),
+              0 1px 0 rgba(255,255,255,0.15) inset;
 }
-
-.nav-cta-ig .cta-icon { font-size: 1rem; }
 
 /* ── Burger (mobile) ── */
 .burger {

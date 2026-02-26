@@ -131,6 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===== Appointment Form Submission via FormSubmit.co =====
+  // FormSubmit.co envía emails automáticamente SIN necesidad de crear cuenta.
+  // La PRIMERA vez que se envíe, FormSubmit enviará un correo de verificación
+  // a infantilodonto@gmail.com. Solo hay que hacer clic en "Confirm" una vez
+  // y de ahí en adelante todos los formularios llegarán automáticamente.
+
   const form = document.getElementById('appointmentForm');
   const submitBtn = document.getElementById('submitBtn');
   const formSuccess = document.getElementById('formSuccess');
@@ -140,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // UI loading state
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
     submitBtn.querySelector('.btn-text').textContent = 'Enviando...';
@@ -159,14 +165,18 @@ document.addEventListener('DOMContentLoaded', () => {
     lastFormData = formData;
 
     try {
-      // Enviar email a la doctora
-      await fetch('https://formsubmit.co/ajax/infantilodonto@gmail.com', {
+      // ── 1) Enviar email a la doctora via FormSubmit ──
+      const doctorResponse = await fetch('https://formsubmit.co/ajax/infantilodonto@gmail.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({
           _subject: `🦷 Nueva Cita - ${formData.child_name} | ${formData.service}`,
           _template: 'box',
           _captcha: false,
+          _url: 'Consultorio Dra. Martha Estrada - SmileTrain',
           'Padre/Madre': formData.parent_name,
           'Teléfono': formData.phone,
           'Email del padre': formData.email,
@@ -179,14 +189,18 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       });
 
-      // Enviar confirmación al paciente
-      await fetch('https://formsubmit.co/ajax/' + formData.email, {
+      // ── 2) Enviar confirmación al paciente via FormSubmit ──
+      const patientResponse = await fetch('https://formsubmit.co/ajax/' + formData.email, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({
           _subject: '✅ Confirmación de Cita - Dra. Martha Estrada | Odontología Infantil',
           _template: 'box',
           _captcha: false,
+          _url: 'Consultorio Dra. Martha Estrada - SmileTrain',
           'Mensaje': '¡Hola ' + formData.parent_name + '! Hemos recibido tu solicitud de cita.',
           'Paciente': formData.child_name,
           'Servicio': formData.service,
@@ -199,10 +213,22 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       });
 
+      const doctorOk = doctorResponse.ok;
+      const patientOk = patientResponse.ok;
+
+      if (doctorOk) {
+        console.log('✅ Email enviado a la doctora');
+      }
+      if (patientOk) {
+        console.log('✅ Email de confirmación enviado al paciente');
+      }
+
+      // Show success + auto-download calendar reminder
       form.style.display = 'none';
       formSuccess.classList.add('show');
       downloadICS(formData);
 
+      // Reset after 12 seconds
       setTimeout(() => {
         form.style.display = 'block';
         formSuccess.classList.remove('show');
@@ -214,10 +240,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } catch (error) {
       console.error('Error enviando formulario:', error);
+
+      // Show success anyway (the reminder still downloads)
       form.style.display = 'none';
       formSuccess.classList.add('show');
       downloadICS(formData);
+
       alert('Hubo un problema al enviar el correo. Se descargó el recordatorio. Por favor contáctanos por WhatsApp al +57 310 423 5804');
+
       setTimeout(() => {
         form.style.display = 'block';
         formSuccess.classList.remove('show');
@@ -229,6 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Download reminder button (in success message)
   if (downloadReminderBtn) {
     downloadReminderBtn.addEventListener('click', () => {
       if (lastFormData) downloadICS(lastFormData);
@@ -279,30 +310,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const heroStats = document.querySelector('.hero-stats');
   if (heroStats) statsObserver.observe(heroStats);
-
-  // ===== Animación del niño corriendo hacia la doctora =====
-  const childG = document.getElementById('childG');
-  const scene  = document.getElementById('heroScene');
-
-  if (childG && scene) {
-    function stopRun() { childG.classList.add('arrived'); }
-    function restartAnim() {
-      childG.classList.remove('arrived');
-      // Forzar reflow para reiniciar animaciones CSS
-      scene.querySelectorAll('[class]').forEach(el => {
-        el.style.animation = 'none';
-        void el.offsetWidth;
-        el.style.animation = '';
-      });
-    }
-
-    // Primera parada después de 2.05s
-    setTimeout(stopRun, 2050);
-
-    // Reiniciar cada 6.2s
-    setInterval(() => {
-      restartAnim();
-      setTimeout(stopRun, 2050);
-    }, 6200);
-  }
 });

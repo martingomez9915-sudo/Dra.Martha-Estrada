@@ -418,9 +418,187 @@
       .nav-social { display: none; }
       .burger { display: flex; }
     }
+  
+    /* ===== CUSTOM CURSOR ===== */
+    * { cursor: none !important; }
+    .custom-cursor {
+      position: fixed; pointer-events: none; z-index: 99999;
+      width: 32px; height: 32px; transform: translate(-50%, -50%);
+      transition: transform .15s ease, opacity .2s;
+      font-size: 22px; line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(45,212,191,.5));
+    }
+    .custom-cursor.clicking { transform: translate(-50%,-50%) scale(0.7) rotate(-20deg); }
+    .cursor-dot {
+      position: fixed; pointer-events: none; z-index: 99998;
+      width: 8px; height: 8px; background: var(--mint);
+      border-radius: 50%; transform: translate(-50%,-50%);
+      transition: transform .08s, width .2s, height .2s;
+    }
+
+    /* ===== FLOATING TEETH PARTICLES ===== */
+    .teeth-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+    .tooth-particle {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: toothFloat linear infinite;
+      filter: drop-shadow(0 2px 4px rgba(45,212,191,.3));
+    }
+    @keyframes toothFloat {
+      0%   { opacity: 0; transform: translateY(100vh) rotate(0deg) scale(0.5); }
+      10%  { opacity: 0.35; }
+      90%  { opacity: 0.2; }
+      100% { opacity: 0; transform: translateY(-120px) rotate(360deg) scale(1); }
+    }
+
+    /* ===== STATS COUNTER SECTION ===== */
+    .stats-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #0d2a3e 50%, #0a1e2c 100%);
+      padding: 80px 0; position: relative; overflow: hidden;
+    }
+    .stats-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(45,212,191,.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 50%, rgba(245,166,35,.06) 0%, transparent 60%);
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+      position: relative; z-index: 1;
+    }
+    .stat-card {
+      text-align: center; padding: 36px 20px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(45,212,191,.15);
+      border-radius: 20px; transition: var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(45,212,191,.06), transparent);
+      opacity: 0; transition: .4s;
+    }
+    .stat-card:hover { transform: translateY(-8px); border-color: rgba(45,212,191,.4); }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-icon { font-size: 2.4rem; margin-bottom: 12px; display: block; }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700;
+      color: var(--mint); line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-number .suffix { font-size: 2rem; }
+    .stat-label { font-size: .85rem; color: rgba(255,255,255,.55); text-transform: uppercase; letter-spacing: .08em; font-weight: 500; }
+    .stat-card .stat-bar {
+      margin-top: 16px; height: 3px;
+      background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden;
+    }
+    .stat-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--mint), var(--mint-dark));
+      width: 0%; transition: width 1.5s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ===== BEFORE/AFTER SMILE SLIDER ===== */
+    .smile-section {
+      background: var(--white); padding: 100px 0;
+    }
+    .before-after-wrapper {
+      max-width: 700px; margin: 0 auto;
+      position: relative; border-radius: 24px;
+      overflow: hidden; box-shadow: var(--shadow);
+      user-select: none; touch-action: none;
+    }
+    .ba-image { width: 100%; height: 400px; display: block; object-fit: cover; object-position: top; }
+    .ba-after { position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; }
+    .ba-after img { width: 700px; max-width: none; height: 100%; object-fit: cover; object-position: top; }
+    .ba-divider {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 100%;
+      background: linear-gradient(180deg, var(--mint), var(--mint-dark));
+      z-index: 10;
+    }
+    .ba-handle {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+      border-radius: 50%; z-index: 11;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(45,212,191,.5);
+      cursor: grab;
+      border: 3px solid white;
+    }
+    .ba-handle:active { cursor: grabbing; }
+    .ba-handle svg { width: 22px; height: 22px; fill: white; }
+    .ba-label {
+      position: absolute; top: 16px; padding: 6px 14px;
+      background: rgba(11,31,46,.7); backdrop-filter: blur(8px);
+      color: white; border-radius: 50px; font-size: .78rem; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+    }
+    .ba-label.before { left: 16px; }
+    .ba-label.after  { right: 16px; }
+    .ba-caption { text-align: center; margin-top: 20px; color: var(--text-light); font-size: .9rem; }
+    .ba-caption strong { color: var(--mint-dark); }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 3px;
+      background: transparent; z-index: 9999;
+    }
+    .scroll-progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--mint), var(--mint-dark), var(--gold));
+      transition: width .1s linear;
+      box-shadow: 0 0 8px rgba(45,212,191,.6);
+    }
+
+    /* ===== INTERACTIVE APPOINTMENT PILL ===== */
+    .sticky-cta {
+      position: fixed; bottom: 100px; right: 30px; z-index: 998;
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      color: white; padding: 10px 18px 10px 14px;
+      border-radius: 50px; display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 30px rgba(11,31,46,.35);
+      font-size: .82rem; font-weight: 600;
+      transform: translateX(120px); transition: transform .5s cubic-bezier(.34,1.56,.64,1);
+      border: 1px solid rgba(45,212,191,.2);
+    }
+    .sticky-cta.visible { transform: translateX(0); }
+    .sticky-cta:hover { background: linear-gradient(135deg, var(--mint-dark), #0b7a6b); transform: translateX(0) scale(1.05); }
+    .sticky-cta-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; animation: pulse-dot 1.5s ease infinite; }
+    @keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.7} }
+
+    /* ===== TYPING EFFECT ===== */
+    .typing-wrapper { display: inline; }
+    .typing-text { color: var(--mint-dark); border-right: 2px solid var(--mint-dark); padding-right: 2px; }
+
+    /* ===== RESPONSIVE ADDITIONS ===== */
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .ba-image { height: 260px; }
+      .ba-after img { width: 100vw; }
+      .sticky-cta { display: none; }
+      * { cursor: auto !important; }
+      .custom-cursor, .cursor-dot { display: none; }
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Custom cursor -->
+  <div class="custom-cursor">🦷</div>
+  <div class="cursor-dot"></div>
+  <!-- Scroll progress -->
+  <div class="scroll-progress"><div class="scroll-progress-fill"></div></div>
+  <!-- Sticky CTA -->
+  <a href="#cita" class="sticky-cta">
+    <div class="sticky-cta-dot"></div>
+    <span>📅 Cita disponible hoy</span>
+  </a>
+
 
   <nav class="navbar" id="navbar">
     <div class="container">
@@ -433,6 +611,7 @@
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#porque">¿Por qué elegirnos?</a></li>
         <li><a href="#testimonios">Testimonios</a></li>
+        <li><a href="#resultados">Resultados</a></li>
         <li><a href="#cita">Agendar Cita</a></li>
         <li><a href="#ubicacion">Ubicación</a></li>
         <li><a href="#cita" class="nav-cta-btn">📅 Cita</a></li>
@@ -452,13 +631,14 @@
   </nav>
 
   <section class="hero" id="inicio">
+    <div class="teeth-particles"></div>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
     <div class="container hero-container">
       <div class="hero-content">
         <div class="hero-badge">⭐ Excelencia Dental en Cali</div>
-        <h1>Cuidamos la <span class="highlight">sonrisa</span> de tus hijos con amor y experiencia</h1>
+        <h1>Cuidamos la <span class="highlight">sonrisa</span> de tus hijos con <span class="typing-wrapper"><span class="typing-text">amor ❤️</span></span></h1>
         <p>Más de 15 años creando sonrisas saludables. Odontología infantil especializada con tecnología de vanguardia y un trato cálido que transforma cada visita en una experiencia positiva.</p>
         <div class="hero-buttons">
           <a href="https://wa.me/573104235804?text=Hola%2C%20quiero%20agendar%20una%20cita%20con%20la%20Dra.%20Martha%20Estrada" target="_blank" class="btn-primary">
@@ -485,6 +665,39 @@
       </div>
     </div>
   </section>
+
+  <!-- STATS COUNTER -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <span class="stat-icon">😄</span>
+          <div class="stat-number"><span class="counter" data-target="10000">0</span><span class="suffix">+</span></div>
+          <div class="stat-label">Sonrisas creadas</div>
+          <div class="stat-bar"><div class="stat-bar-fill" data-width="92"></div></div>
+        </div>
+        <div class="stat-card reveal" style="transition-delay:.1s">
+          <span class="stat-icon">📅</span>
+          <div class="stat-number"><span class="counter" data-target="15">0</span><span class="suffix">+</span></div>
+          <div class="stat-label">Años de experiencia</div>
+          <div class="stat-bar"><div class="stat-bar-fill" data-width="85"></div></div>
+        </div>
+        <div class="stat-card reveal" style="transition-delay:.2s">
+          <span class="stat-icon">👨‍👩‍👧‍👦</span>
+          <div class="stat-number"><span class="counter" data-target="98">0</span><span class="suffix">%</span></div>
+          <div class="stat-label">Familias satisfechas</div>
+          <div class="stat-bar"><div class="stat-bar-fill" data-width="98"></div></div>
+        </div>
+        <div class="stat-card reveal" style="transition-delay:.3s">
+          <span class="stat-icon">🏆</span>
+          <div class="stat-number"><span class="counter" data-target="5">0</span><span class="suffix">⭐</span></div>
+          <div class="stat-label">Calificación promedio</div>
+          <div class="stat-bar"><div class="stat-bar-fill" data-width="100"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
   <section class="services" id="servicios">
     <div class="container">
@@ -517,6 +730,36 @@
       </div>
     </div>
   </section>
+
+  <!-- SMILE BEFORE/AFTER -->
+  <section class="smile-section" id="resultados">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-tag">Resultados Reales</div>
+        <h2>Transformaciones que hablan por sí solas</h2>
+        <p>Desliza el control para ver el antes y después de nuestros pacientes. Resultados reales con ortopedia maxilar.</p>
+      </div>
+      <div class="before-after-wrapper reveal" id="baSlider">
+        <!-- BEFORE image (background) -->
+        <img class="ba-image"
+          src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=700&q=80"
+          alt="Antes del tratamiento" draggable="false" />
+        <!-- AFTER image (clipped overlay) -->
+        <div class="ba-after" id="baAfter">
+          <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=700&q=80"
+            alt="Después del tratamiento" draggable="false" />
+        </div>
+        <div class="ba-divider" id="baDivider"></div>
+        <div class="ba-handle" id="baHandle">
+          <svg viewBox="0 0 24 24"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7"/></svg>
+        </div>
+        <span class="ba-label before">Antes</span>
+        <span class="ba-label after">Después</span>
+      </div>
+      <p class="ba-caption">👆 Arrastra el control · <strong>Resultados con ortopedia maxilar y odontología preventiva</strong></p>
+    </div>
+  </section>
+
 
   <section class="about" id="nosotros">
     <div class="container">
@@ -837,6 +1080,132 @@
       document.getElementById('formSuccess').classList.add('show');
     });
     document.getElementById('preferredDate').min = new Date().toISOString().split('T')[0];
+  
+
+    // ===== CUSTOM CURSOR =====
+    const cursor = document.querySelector('.custom-cursor');
+    const dot = document.querySelector('.cursor-dot');
+    if (cursor && window.innerWidth > 768) {
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top  = e.clientY + 'px';
+        dot.style.left = e.clientX + 'px';
+        dot.style.top  = e.clientY + 'px';
+      });
+      document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+      document.addEventListener('mouseup',   () => cursor.classList.remove('clicking'));
+    }
+
+    // ===== SCROLL PROGRESS =====
+    const progressFill = document.querySelector('.scroll-progress-fill');
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      if (progressFill) progressFill.style.width = pct + '%';
+    });
+
+    // ===== STICKY CTA =====
+    const stickyCta = document.querySelector('.sticky-cta');
+    window.addEventListener('scroll', () => {
+      if (stickyCta) stickyCta.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    // ===== ANIMATED COUNTERS =====
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const duration = 1800;
+        const start = performance.now();
+        const animate = (now) => {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(ease * target).toLocaleString('es-CO');
+          if (progress < 1) requestAnimationFrame(animate);
+          else el.textContent = target.toLocaleString('es-CO');
+        };
+        requestAnimationFrame(animate);
+        // Animate bar
+        const bar = el.closest('.stat-card').querySelector('.stat-bar-fill');
+        if (bar) setTimeout(() => bar.style.width = bar.dataset.width + '%', 200);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+    // ===== FLOATING TEETH PARTICLES =====
+    const particleContainer = document.querySelector('.teeth-particles');
+    if (particleContainer) {
+      const emojis = ['🦷','✨','🌟','💎','⭐'];
+      for (let i = 0; i < 18; i++) {
+        const p = document.createElement('div');
+        p.className = 'tooth-particle';
+        p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        p.style.cssText = [
+          `left: ${Math.random()*100}%`,
+          `animation-duration: ${6 + Math.random()*10}s`,
+          `animation-delay: ${Math.random()*8}s`,
+          `font-size: ${.7 + Math.random()*.8}rem`
+        ].join(';');
+        particleContainer.appendChild(p);
+      }
+    }
+
+    // ===== BEFORE/AFTER SLIDER =====
+    const slider = document.getElementById('baSlider');
+    const baAfter = document.getElementById('baAfter');
+    const baHandle = document.getElementById('baHandle');
+    const baDivider = document.getElementById('baDivider');
+    if (slider && baAfter) {
+      let isDragging = false;
+      const setPosition = (x) => {
+        const rect = slider.getBoundingClientRect();
+        let pct = Math.max(5, Math.min(95, ((x - rect.left) / rect.width) * 100));
+        baAfter.style.width = pct + '%';
+        baDivider.style.left = pct + '%';
+        baHandle.style.left = pct + '%';
+      };
+      baHandle.addEventListener('mousedown',  () => isDragging = true);
+      baHandle.addEventListener('touchstart', () => isDragging = true, {passive:true});
+      document.addEventListener('mouseup',   () => isDragging = false);
+      document.addEventListener('touchend',  () => isDragging = false);
+      document.addEventListener('mousemove', e => { if (isDragging) setPosition(e.clientX); });
+      document.addEventListener('touchmove', e => { if (isDragging) setPosition(e.touches[0].clientX); }, {passive:true});
+      // Auto-animate hint on load
+      const hint = () => {
+        let pos = 50; let dir = -1; let steps = 0;
+        const anim = setInterval(() => {
+          pos += dir * 0.8;
+          setPosition(slider.getBoundingClientRect().left + (pos/100)*slider.getBoundingClientRect().width);
+          steps++;
+          if (pos <= 25 || pos >= 75) dir *= -1;
+          if (steps > 80) clearInterval(anim);
+        }, 16);
+      };
+      const hintObserver = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { hint(); hintObserver.disconnect(); }
+      }, { threshold: 0.5 });
+      hintObserver.observe(slider);
+    }
+
+    // ===== TYPING EFFECT IN HERO =====
+    const typingEl = document.querySelector('.typing-text');
+    if (typingEl) {
+      const words = ['amor ❤️', 'dedicación 🌟', 'experiencia 🏆', 'confianza 😊'];
+      let wi = 0, ci = 0, deleting = false;
+      const type = () => {
+        const word = words[wi];
+        typingEl.textContent = deleting ? word.slice(0, ci--) : word.slice(0, ci++);
+        const speed = deleting ? 60 : 90;
+        if (!deleting && ci > word.length) { deleting = true; setTimeout(type, 1400); return; }
+        if (deleting && ci < 0)  { deleting = false; wi = (wi+1) % words.length; ci = 0; }
+        setTimeout(type, speed);
+      };
+      type();
+    }
+
   </script>
+
 </body>
 </html>

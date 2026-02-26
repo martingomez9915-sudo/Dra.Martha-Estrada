@@ -311,3 +311,56 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroStats = document.querySelector('.hero-stats');
   if (heroStats) statsObserver.observe(heroStats);
 });
+// SCROLL SUAVE PARA LOS ENLACES
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute('href'));
+        target.scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// VALIDACIÓN BÁSICA FORMULARIO
+const form = document.querySelector("form");
+
+if (form) {
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const nombre = form.querySelector("input[type='text']").value.trim();
+        const email = form.querySelector("input[type='email']").value.trim();
+        const mensaje = form.querySelector("textarea").value.trim();
+
+        if (nombre === "" || email === "" || mensaje === "") {
+            alert("Por favor completa todos los campos.");
+            return;
+        }
+
+        alert("¡Gracias por contactarnos! Pronto nos comunicaremos contigo.");
+        form.reset();
+    });
+}
+
+// ANIMACIÓN AL HACER SCROLL
+const cards = document.querySelectorAll(".card");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+        }
+    });
+}, {
+    threshold: 0.2
+});
+
+cards.forEach(card => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(50px)";
+    card.style.transition = "all 0.6s ease";
+    observer.observe(card);
+});

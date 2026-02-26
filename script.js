@@ -277,37 +277,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ===== Counter animation for hero stats =====
-  const statItems = document.querySelectorAll('.stat-item h3');
-  let statsCounted = false;
-
-  function animateCounter(el) {
-    const text = el.textContent;
-    const match = text.match(/(\d+)/);
-    if (!match) return;
-    const target = parseInt(match[0]);
-    const suffix = text.replace(match[0], '');
-    const duration = 2000;
-    const start = performance.now();
-
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(target * eased);
-      el.textContent = current + suffix;
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
-  }
-
-  const statsObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting && !statsCounted) {
-      statsCounted = true;
-      statItems.forEach(animateCounter);
-    }
-  }, { threshold: 0.5 });
-
-  const heroStats = document.querySelector('.hero-stats');
-  if (heroStats) statsObserver.observe(heroStats);
-});

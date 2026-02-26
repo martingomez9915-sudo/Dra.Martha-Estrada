@@ -160,313 +160,404 @@
         <div class="hero-scene" id="heroScene">
           <svg viewBox="0 0 460 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
             <defs>
-              <!-- FILTROS PARA REALISMO -->
-              <filter id="softSkin" x="-0.02" y="-0.02" width="1.04" height="1.04">
-                <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur" />
-                <feSpecularLighting in="blur" surfaceScale="5" specularConstant="0.8" specularExponent="20" lighting-color="#ffffff" result="spec">
-                  <fePointLight x="200" y="100" z="200" />
-                </feSpecularLighting>
-                <feComposite in="SourceGraphic" in2="spec" operator="arithmetic" k1="0" k2="0.7" k3="0.3" k4="0" />
-              </filter>
-              <filter id="pores" x="-0.02" y="-0.02" width="1.04" height="1.04">
-                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="1" result="noise" />
-                <feColorMatrix in="noise" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.02 0" result="poreNoise" />
-                <feComposite in="SourceGraphic" in2="poreNoise" operator="over" />
-              </filter>
-
-              <!-- GRADIENTES DE PIEL REALISTAS -->
-              <radialGradient id="skinDoctor" cx="0.5" cy="0.35" r="0.6" fx="0.45" fy="0.3">
-                <stop offset="0%" stop-color="#FDE9D8" />
-                <stop offset="40%" stop-color="#F7D5B6" />
-                <stop offset="80%" stop-color="#E5B690" />
-                <stop offset="100%" stop-color="#C9926A" />
+              <!-- Skin tones -->
+              <radialGradient id="skD" cx="50%" cy="36%" r="56%">
+                <stop offset="0%"   stop-color="#FDDDC8"/>
+                <stop offset="100%" stop-color="#EFB890"/>
               </radialGradient>
-              <radialGradient id="skinChild" cx="0.5" cy="0.4" r="0.6" fx="0.45" fy="0.35">
-                <stop offset="0%" stop-color="#FEF0DD" />
-                <stop offset="50%" stop-color="#F5D8B5" />
-                <stop offset="100%" stop-color="#DDB28B" />
+              <radialGradient id="skC" cx="50%" cy="36%" r="56%">
+                <stop offset="0%"   stop-color="#FDEBD2"/>
+                <stop offset="100%" stop-color="#ECCF9A"/>
               </radialGradient>
-
-              <!-- CABELLO -->
-              <linearGradient id="hairDoctor" x1="0.3" y1="0.2" x2="0.7" y2="0.9">
-                <stop offset="0%" stop-color="#B87A5A" />
-                <stop offset="50%" stop-color="#9C5E3E" />
-                <stop offset="100%" stop-color="#6F422A" />
+              <!-- Hair -->
+              <linearGradient id="hD" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#6A4030"/>
+                <stop offset="100%" stop-color="#3E2418"/>
               </linearGradient>
-              <linearGradient id="hairChild" x1="0.3" y1="0.2" x2="0.7" y2="0.9">
-                <stop offset="0%" stop-color="#5A4A3A" />
-                <stop offset="70%" stop-color="#3A2A1A" />
+              <linearGradient id="hC" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#3C2A18"/>
+                <stop offset="100%" stop-color="#1E1008"/>
               </linearGradient>
-
-              <!-- UNIFORME -->
-              <linearGradient id="scrubs" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#FFBECB" />
-                <stop offset="100%" stop-color="#FF9AAD" />
-              </linearGradient>
+              <!-- White coat -->
               <linearGradient id="coat" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stop-color="#F2FAFF" />
-                <stop offset="50%" stop-color="#FFFFFF" />
-                <stop offset="100%" stop-color="#E8F2F5" />
+                <stop offset="0%"   stop-color="#EEF8F5"/>
+                <stop offset="50%"  stop-color="#FFFFFF"/>
+                <stop offset="100%" stop-color="#E4F3EF"/>
               </linearGradient>
-
-              <!-- OJOS (iris con detalle) -->
-              <radialGradient id="irisDoctor" cx="0.4" cy="0.4" r="0.6" fx="0.3" fy="0.3">
-                <stop offset="0%" stop-color="#7F5A38" />
-                <stop offset="70%" stop-color="#4A3422" />
-                <stop offset="100%" stop-color="#281E12" />
-              </radialGradient>
-              <radialGradient id="irisChild" cx="0.4" cy="0.4" r="0.6" fx="0.3" fy="0.3">
-                <stop offset="0%" stop-color="#8B6B4A" />
-                <stop offset="70%" stop-color="#5A402A" />
-              </radialGradient>
-
-              <!-- PATRÓN DE POROS (sutil) -->
-              <pattern id="porePattern" patternUnits="userSpaceOnUse" width="20" height="20" patternTransform="scale(0.5)">
-                <circle cx="2" cy="3" r="0.3" fill="#A67B5B" opacity="0.1" />
-                <circle cx="10" cy="8" r="0.2" fill="#A67B5B" opacity="0.1" />
-                <circle cx="15" cy="12" r="0.25" fill="#A67B5B" opacity="0.1" />
-                <circle cx="5" cy="15" r="0.2" fill="#A67B5B" opacity="0.1" />
-              </pattern>
+              <!-- Scrubs -->
+              <linearGradient id="scrub" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#64DEC4"/>
+                <stop offset="100%" stop-color="#2EBAA0"/>
+              </linearGradient>
+              <!-- Child shirt -->
+              <linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#FFD97D"/>
+                <stop offset="100%" stop-color="#FFBE3A"/>
+              </linearGradient>
+              <!-- Jeans -->
+              <linearGradient id="jeans" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#6090D8"/>
+                <stop offset="100%" stop-color="#3A66B0"/>
+              </linearGradient>
+              <filter id="fs"><feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="rgba(0,0,0,0.08)"/></filter>
             </defs>
 
-            <!-- ========== FONDO DETALLADO (consultorio infantil) ========== -->
-            <rect x="0" y="0" width="460" height="290" fill="#E0F2EC" />
-            <rect x="0" y="280" width="460" height="6" fill="#B8D9D0" rx="2" />
-            <rect x="0" y="284" width="460" height="76" fill="#D0E8E0" />
+            <!-- ══ BACKGROUND: cozy dental office ══ -->
+            <rect x="0" y="0"   width="460" height="290" fill="#EDF9F5"/>
+            <rect x="0" y="280" width="460" height="6"   fill="#C4E4DA" rx="2"/>
+            <rect x="0" y="284" width="460" height="76"  fill="#D0E8E0"/>
+            <!-- Floor tiles -->
+            <line x1="0" y1="312" x2="460" y2="312" stroke="#BAD0C9" stroke-width=".9"/>
+            <line x1="0" y1="340" x2="460" y2="340" stroke="#BAD0C9" stroke-width=".7"/>
+            <line x1="92"  y1="284" x2="92"  y2="360" stroke="#BAD0C9" stroke-width=".7"/>
+            <line x1="184" y1="284" x2="184" y2="360" stroke="#BAD0C9" stroke-width=".7"/>
+            <line x1="276" y1="284" x2="276" y2="360" stroke="#BAD0C9" stroke-width=".7"/>
+            <line x1="368" y1="284" x2="368" y2="360" stroke="#BAD0C9" stroke-width=".7"/>
 
-            <!-- Líneas de piso -->
-            <line x1="0" y1="312" x2="460" y2="312" stroke="#B0CEC4" stroke-width="1" />
-            <line x1="0" y1="340" x2="460" y2="340" stroke="#B0CEC4" stroke-width="0.8" />
-            <line x1="92" y1="284" x2="92" y2="360" stroke="#B0CEC4" stroke-width="0.8" />
-            <line x1="184" y1="284" x2="184" y2="360" stroke="#B0CEC4" stroke-width="0.8" />
-            <line x1="276" y1="284" x2="276" y2="360" stroke="#B0CEC4" stroke-width="0.8" />
-            <line x1="368" y1="284" x2="368" y2="360" stroke="#B0CEC4" stroke-width="0.8" />
+            <!-- Window right -->
+            <rect x="368" y="22" width="76" height="110" rx="5" fill="#D0EAF6" stroke="#B0D6E6" stroke-width="1.6"/>
+            <rect x="368" y="22" width="76" height="55"  rx="5" fill="#BEE0F2"/>
+            <line x1="406" y1="22" x2="406" y2="132" stroke="white" stroke-width="2.2"/>
+            <line x1="368" y1="77" x2="444" y2="77"  stroke="white" stroke-width="2.2"/>
+            <ellipse cx="402" cy="298" rx="40" ry="9" fill="rgba(210,238,232,.5)"/>
 
-            <!-- Ventana derecha -->
-            <rect x="368" y="22" width="76" height="110" rx="5" fill="#CAE5F0" stroke="#AAD0E0" stroke-width="1.5" />
-            <rect x="368" y="22" width="76" height="55" rx="5" fill="#B0D8EA" />
-            <line x1="406" y1="22" x2="406" y2="132" stroke="#FFFFFF" stroke-width="2" />
-            <line x1="368" y1="77" x2="444" y2="77" stroke="#FFFFFF" stroke-width="2" />
+            <!-- Ocean mural left wall -->
+            <ellipse cx="56" cy="170" rx="52" ry="46" fill="#B0E4D8" opacity=".38"/>
+            <path d="M16,180 Q38,164 58,180 Q78,196 104,180" stroke="#50C8B8" stroke-width="2" fill="none" opacity=".5"/>
+            <path d="M12,198 Q38,184 64,198 Q90,212 112,198" stroke="#50C8B8" stroke-width="1.6" fill="none" opacity=".38"/>
+            <!-- Fish A -->
+            <ellipse cx="32" cy="168" rx="12" ry="7.5" fill="#F2845C" opacity=".6"/>
+            <polygon points="44,168 52,162 52,174" fill="#F2845C" opacity=".6"/>
+            <circle cx="29" cy="166" r="2"   fill="white" opacity=".85"/>
+            <circle cx="29" cy="166" r=".9"  fill="#333"/>
+            <!-- Fish B -->
+            <ellipse cx="76" cy="190" rx="9" ry="6" fill="#5BC8F5" opacity=".6"/>
+            <polygon points="85,190 92,185 92,195" fill="#5BC8F5" opacity=".6"/>
+            <circle cx="73" cy="188" r="1.7" fill="white" opacity=".85"/>
+            <circle cx="73" cy="188" r=".8"  fill="#333"/>
+            <!-- Octopus -->
+            <circle cx="32" cy="214" r="10" fill="#D4A8E0" opacity=".46"/>
+            <path d="M26,224 Q24,236 22,224 M31,226 Q29,238 27,226 M36,226 Q34,238 32,226" stroke="#D4A8E0" stroke-width="2.5" fill="none" opacity=".48" stroke-linecap="round"/>
+            <!-- Coral -->
+            <path d="M92,262 Q90,246 96,236 Q100,246 98,262 M100,262 Q102,240 108,228 Q112,240 110,262" fill="#F4A261" opacity=".4"/>
+            <ellipse cx="94"  cy="235" rx="6" ry="5"   fill="#F4A261" opacity=".4"/>
+            <ellipse cx="108" cy="226" rx="6.5" ry="5.5" fill="#F4A261" opacity=".36"/>
 
-            <!-- Mural marino (izquierda) con peces y detalles -->
-            <ellipse cx="56" cy="170" rx="52" ry="46" fill="#A8DCD0" opacity="0.4" />
-            <path d="M16,180 Q38,164 58,180 Q78,196 104,180" stroke="#48B8A8" stroke-width="2" fill="none" opacity="0.5" />
-            <ellipse cx="32" cy="168" rx="12" ry="7.5" fill="#F2845C" opacity="0.6" />
-            <polygon points="44,168 52,162 52,174" fill="#F2845C" opacity="0.6" />
-            <circle cx="29" cy="166" r="2" fill="white" opacity="0.8" />
-            <circle cx="29" cy="166" r="1" fill="#333" />
-            <!-- Más peces, algas... (se mantiene igual que en código anterior) -->
-            
-            <!-- Gabinete izquierdo con maceta -->
-            <rect x="0" y="200" width="68" height="84" rx="5" fill="#E0F0EA" stroke="#B8D8D0" stroke-width="1" opacity="0.9" />
-            <rect x="5" y="240" width="24" height="18" rx="3" fill="#D0E8E0" />
-            <circle cx="17" cy="249" r="2.5" fill="#A0D8CC" />
-            <!-- Planta -->
-            <rect x="22" y="182" width="11" height="18" rx="3" fill="#E09070" />
-            <ellipse cx="27" cy="180" rx="10" ry="9" fill="#44A668" />
-            <ellipse cx="19" cy="184" rx="7" ry="6.5" fill="#389058" />
+            <!-- Cabinet left -->
+            <rect x="0" y="200" width="68" height="84" rx="5" fill="#EEF8F4" stroke="#C2E0D8" stroke-width="1.2" opacity=".85"/>
+            <rect x="0" y="232" width="68" height="1.6" fill="#C2E0D8" opacity=".85"/>
+            <rect x="5"  y="240" width="24" height="18" rx="3" fill="#DCF0EA" stroke="#B2D8D0" stroke-width=".8" opacity=".85"/>
+            <rect x="35" y="240" width="24" height="18" rx="3" fill="#DCF0EA" stroke="#B2D8D0" stroke-width=".8" opacity=".85"/>
+            <circle cx="17" cy="249" r="2.5" fill="#A0E0D2" opacity=".85"/>
+            <circle cx="47" cy="249" r="2.5" fill="#A0E0D2" opacity=".85"/>
+            <!-- Plant on cabinet -->
+            <rect x="22" y="182" width="11" height="18" rx="3" fill="#E09070"/>
+            <ellipse cx="27" cy="180" rx="10" ry="9"  fill="#44A668"/>
+            <ellipse cx="19" cy="184" rx="7"  ry="6.5" fill="#389058"/>
+            <ellipse cx="35" cy="184" rx="7"  ry="6.5" fill="#50B072"/>
 
-            <!-- Nubes/luces de techo -->
-            <ellipse cx="140" cy="20" rx="42" ry="20" fill="white" opacity="0.8" />
-            <ellipse cx="320" cy="18" rx="38" ry="19" fill="white" opacity="0.8" />
+            <!-- Cloud ceiling lights -->
+            <ellipse cx="140" cy="20" rx="42" ry="20" fill="white" opacity=".9"/>
+            <ellipse cx="118" cy="26" rx="28" ry="16" fill="white" opacity=".9"/>
+            <ellipse cx="164" cy="28" rx="30" ry="15" fill="white" opacity=".9"/>
+            <circle  cx="140" cy="22" r="5.5" fill="#FFE55C" opacity=".42"/>
+            <ellipse cx="320" cy="18" rx="38" ry="19" fill="white" opacity=".9"/>
+            <ellipse cx="298" cy="24" rx="26" ry="15" fill="white" opacity=".9"/>
+            <ellipse cx="344" cy="26" rx="28" ry="14" fill="white" opacity=".9"/>
+            <circle  cx="320" cy="20" r="5"   fill="#FFE55C" opacity=".42"/>
 
-            <!-- ========== DOCTORA (joven 30 años, hiperrealista) ========== -->
-            <g class="gD" filter="url(#softSkin)">
+            <!-- Motion trail dots -->
+            <ellipse class="tr t1" cx="38"  cy="290" rx="5.5" ry="2.8"/>
+            <ellipse class="tr t2" cx="68"  cy="289" rx="6"   ry="2.8"/>
+            <ellipse class="tr t3" cx="96"  cy="290" rx="5.5" ry="2.5"/>
+            <ellipse class="tr t4" cx="122" cy="289" rx="4.5" ry="2.2"/>
+
+            <!-- ══════════════════════════════
+                 DENTIST  –  right side
+                 Pretty face, arms open
+            ══════════════════════════════ -->
+            <g class="gD">
               <g class="gDB">
-                <!-- Piernas y zapatos -->
-                <rect x="300" y="272" width="17" height="44" rx="7" fill="url(#scrubs)" />
-                <rect x="323" y="272" width="17" height="44" rx="7" fill="url(#scrubs)" />
-                <ellipse cx="309" cy="318" rx="13" ry="5.5" fill="#2A1E12" />
-                <ellipse cx="332" cy="318" rx="13" ry="5.5" fill="#2A1E12" />
+                <!-- Legs / shoes -->
+                <rect x="300" y="272" width="17" height="44" rx="7" fill="url(#scrub)"/>
+                <rect x="323" y="272" width="17" height="44" rx="7" fill="url(#scrub)"/>
+                <ellipse cx="309" cy="318" rx="13" ry="5.5" fill="#1E1E2E"/>
+                <ellipse cx="332" cy="318" rx="13" ry="5.5" fill="#1E1E2E"/>
+                <ellipse cx="306" cy="315" rx="6.5" ry="2.5" fill="#3A3A4A" opacity=".4"/>
+                <ellipse cx="329" cy="315" rx="6.5" ry="2.5" fill="#3A3A4A" opacity=".4"/>
 
-                <!-- Bata blanca -->
-                <path d="M290,206 Q295,275 308,278 L334,278 Q347,275 352,206 Z" fill="url(#coat)" stroke="#C8E0DA" stroke-width="1" />
-                <rect x="300" y="238" width="42" height="44" rx="5" fill="url(#scrubs)" />
+                <!-- Coat lower -->
+                <path d="M290,206 Q295,275 308,278 L334,278 Q347,275 352,206 Z" fill="url(#coat)" stroke="#CCE8E2" stroke-width="1"/>
+                <rect x="300" y="238" width="42" height="44" rx="5" fill="url(#scrub)"/>
 
-                <!-- Brazos (piel) -->
+                <!-- Left arm (opens wide) -->
                 <g class="dAL">
-                  <path d="M294,206 Q278,222 270,246" stroke="#E5B690" stroke-width="19" stroke-linecap="round" fill="none" />
-                  <ellipse cx="268" cy="250" rx="12" ry="10" fill="url(#skinDoctor)" />
+                  <path d="M294,206 Q278,222 270,246" stroke="#EFB890" stroke-width="15" stroke-linecap="round" fill="none"/>
+                  <path d="M294,206 Q278,222 270,246" stroke="url(#coat)" stroke-width="17" stroke-linecap="round" fill="none" opacity=".82"/>
+                  <ellipse cx="268" cy="250" rx="10.5" ry="9.5" fill="url(#skD)"/>
+                  <!-- Fingers L -->
+                  <path d="M261,244 Q256,237 258,231 M265,242 Q261,235 264,229 M269,240 Q268,233 272,228 M273,242 Q275,235 280,231"
+                        stroke="#E8A880" stroke-width="3.8" stroke-linecap="round" fill="none"/>
                 </g>
+                <!-- Right arm -->
                 <g class="dAR">
-                  <path d="M348,206 Q364,222 372,246" stroke="#E5B690" stroke-width="19" stroke-linecap="round" fill="none" />
-                  <ellipse cx="374" cy="250" rx="12" ry="10" fill="url(#skinDoctor)" />
+                  <path d="M348,206 Q364,222 372,246" stroke="#EFB890" stroke-width="15" stroke-linecap="round" fill="none"/>
+                  <path d="M348,206 Q364,222 372,246" stroke="url(#coat)" stroke-width="17" stroke-linecap="round" fill="none" opacity=".82"/>
+                  <ellipse cx="374" cy="250" rx="10.5" ry="9.5" fill="url(#skD)"/>
+                  <path d="M381,244 Q386,237 384,231 M377,242 Q381,235 378,229 M373,240 Q374,233 370,228 M369,242 Q367,235 362,231"
+                        stroke="#E8A880" stroke-width="3.8" stroke-linecap="round" fill="none"/>
                 </g>
 
-                <!-- Cabeza (forma ovalada realista) -->
-                <ellipse cx="321" cy="142" rx="24" ry="28" fill="url(#skinDoctor)" />
-                <!-- Aplicar patrón de poros -->
-                <rect x="297" y="116" width="48" height="42" fill="url(#porePattern)" opacity="0.3" />
+                <!-- Coat body -->
+                <rect x="290" y="166" width="62" height="46" rx="11" fill="url(#coat)" stroke="#C8E4DE" stroke-width="1.3"/>
+                <!-- Lapels -->
+                <path d="M308,166 L320,187 L312,187 Z M334,166 L322,187 L330,187 Z" fill="#DFF0EB"/>
+                <!-- Buttons -->
+                <circle cx="321" cy="177" r="2.4" fill="#C4DDD8"/>
+                <circle cx="321" cy="187" r="2.4" fill="#C4DDD8"/>
+                <!-- Pocket -->
+                <rect x="292" y="175" width="13" height="14" rx="2.5" fill="#D8EEE8" stroke="#B8D8D2" stroke-width=".8"/>
+                <!-- Stethoscope -->
+                <path d="M312,172 Q319,190 324,194 Q329,198 326,190"
+                      stroke="#2EBAA0" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                <circle cx="325" cy="194" r="5"   fill="#2EBAA0" stroke="#1F937F" stroke-width="1.3"/>
+                <circle cx="325" cy="194" r="2.5" fill="#1F937F"/>
+                <!-- Badge -->
+                <rect x="333" y="170" width="17" height="13" rx="3" fill="#2EBAA0"/>
+                <rect x="335" y="173" width="13" height="2"   rx="1" fill="white" opacity=".9"/>
+                <rect x="335" y="177" width="9"  height="1.3" rx="1" fill="white" opacity=".5"/>
+                <!-- Scrubs collar -->
+                <path d="M300,166 Q321,158 344,166" fill="#64DEC4" stroke="#3DBBA4" stroke-width=".8"/>
 
-                <!-- Cuello -->
-                <rect x="311" y="163" width="20" height="22" rx="7" fill="url(#skinDoctor)" />
+                <!-- ══ HEAD  Dentist  (beautiful, elegant) ══ -->
+                <!-- Hair back volume -->
+                <ellipse cx="321" cy="116" rx="27" ry="21" fill="url(#hD)"/>
+                <!-- Updo bun -->
+                <ellipse cx="321" cy="102" rx="17" ry="15" fill="url(#hD)"/>
+                <ellipse cx="321" cy="96"  rx="10" ry="9"  fill="#4A2C1C"/>
+                <path d="M314,98 Q321,92 328,98" stroke="#3A2014" stroke-width="1.5" fill="none"/>
+                <!-- Hair pin -->
+                <line x1="324" y1="95" x2="324" y2="85" stroke="#2EBAA0" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="324" cy="84" r="2.6" fill="#2EBAA0"/>
+                <!-- Hair sides -->
+                <path d="M296,128 Q296,108 321,104 Q346,108 346,128 Q348,144 344,156 L298,156 Q294,144 296,128 Z" fill="url(#hD)"/>
+                <!-- Soft tendrils -->
+                <path d="M298,131 Q302,124 308,127" stroke="#4A2C1C" stroke-width="1.1" fill="none" opacity=".45"/>
+                <path d="M344,131 Q340,124 334,127" stroke="#4A2C1C" stroke-width="1.1" fill="none" opacity=".45"/>
 
-                <!-- CABELLO (realista con mechones) -->
-                <path d="M296,128 Q296,108 321,104 Q346,108 346,128 Q348,144 344,156 L298,156 Q294,144 296,128 Z" fill="url(#hairDoctor)" />
-                <!-- Volumen superior y coleta -->
-                <ellipse cx="321" cy="102" rx="20" ry="16" fill="url(#hairDoctor)" />
-                <path d="M315,92 L327,92 L326,70 Q321,65 316,70 Z" fill="url(#hairDoctor)" />
-                <ellipse cx="321" cy="70" rx="13" ry="9" fill="url(#hairDoctor)" />
-                <!-- Mechones sueltos -->
-                <path d="M307,101 Q302,95 300,88" stroke="#B87A5A" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7" />
-                <path d="M335,101 Q340,95 342,88" stroke="#B87A5A" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7" />
-                <!-- Coletera metálica -->
-                <circle cx="321" cy="94" r="5" fill="#C0C0C0" />
-                <circle cx="321" cy="94" r="2.5" fill="#FFFFFF" />
+                <!-- Face -->
+                <ellipse cx="321" cy="142" rx="24" ry="28" fill="url(#skD)"/>
+                <!-- Neck -->
+                <rect x="311" y="163" width="20" height="22" rx="7" fill="url(#skD)"/>
 
-                <!-- Orejas -->
-                <ellipse cx="297" cy="143" rx="6" ry="9" fill="url(#skinDoctor)" />
-                <ellipse cx="345" cy="143" rx="6" ry="9" fill="url(#skinDoctor)" />
-                <!-- Aretes -->
-                <circle cx="297" cy="148" r="2.8" fill="#E0E0E0" />
-                <circle cx="345" cy="148" r="2.8" fill="#E0E0E0" />
+                <!-- Ears + drop earrings -->
+                <ellipse cx="297" cy="143" rx="6" ry="8"   fill="#EFB890"/>
+                <ellipse cx="298" cy="143" rx="3.2" ry="5" fill="#E4AA80" opacity=".5"/>
+                <circle  cx="297" cy="146" r="2"   fill="white" stroke="#2EBAA0" stroke-width="1.1"/>
+                <ellipse cx="297" cy="150" rx="1.6" ry="2.3" fill="#2EBAA0"/>
+                <ellipse cx="345" cy="143" rx="6" ry="8"   fill="#EFB890"/>
+                <ellipse cx="344" cy="143" rx="3.2" ry="5" fill="#E4AA80" opacity=".5"/>
+                <circle  cx="345" cy="146" r="2"   fill="white" stroke="#2EBAA0" stroke-width="1.1"/>
+                <ellipse cx="345" cy="150" rx="1.6" ry="2.3" fill="#2EBAA0"/>
 
-                <!-- OJOS (simétricos, realistas) -->
-                <!-- Esclerótica -->
-                <ellipse cx="311" cy="137" rx="7.5" ry="7" fill="#F5F5F5" />
-                <ellipse cx="331" cy="137" rx="7.5" ry="7" fill="#F5F5F5" />
-                <!-- Iris con degradado -->
-                <circle cx="311" cy="138" r="4.8" fill="url(#irisDoctor)" />
-                <circle cx="331" cy="138" r="4.8" fill="url(#irisDoctor)" />
-                <!-- Pupila -->
-                <circle cx="311" cy="139" r="2.6" fill="#080808" />
-                <circle cx="331" cy="139" r="2.6" fill="#080808" />
-                <!-- Brillo principal -->
-                <circle cx="309" cy="135" r="1.7" fill="#FFFFFF" />
-                <circle cx="329" cy="135" r="1.7" fill="#FFFFFF" />
-                <!-- Brillo secundario -->
-                <circle cx="312" cy="141" r="0.9" fill="#FFFFFF" opacity="0.8" />
-                <circle cx="332" cy="141" r="0.9" fill="#FFFFFF" opacity="0.8" />
-                <!-- Párpado superior -->
-                <path d="M304,131 Q311,126 318,131" stroke="#3A281C" stroke-width="1.5" fill="none" stroke-linecap="round" />
-                <path d="M324,131 Q331,126 338,131" stroke="#3A281C" stroke-width="1.5" fill="none" stroke-linecap="round" />
-                <!-- Pestañas ligeras -->
-                <path d="M306,130 L302,126" stroke="#2A1A10" stroke-width="1" fill="none" />
-                <path d="M318,130 L316,125" stroke="#2A1A10" stroke-width="1" fill="none" />
-                <path d="M324,130 L328,125" stroke="#2A1A10" stroke-width="1" fill="none" />
-                <path d="M336,130 L340,126" stroke="#2A1A10" stroke-width="1" fill="none" />
+                <!-- Eyebrows (soft, well-shaped) -->
+                <path d="M308,128 Q315,122 322,125" stroke="#5A3828" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+                <path d="M321,125 Q328,122 335,128" stroke="#5A3828" stroke-width="2.2" fill="none" stroke-linecap="round"/>
 
-                <!-- Cejas con vello -->
-                <path d="M302,123 Q309,118 316,121" stroke="#3A281C" stroke-width="2.2" fill="none" stroke-linecap="round" />
-                <path d="M326,121 Q333,118 340,123" stroke="#3A281C" stroke-width="2.2" fill="none" stroke-linecap="round" />
-                <line x1="304" y1="122" x2="308" y2="120" stroke="#3A281C" stroke-width="0.8" opacity="0.6" />
-                <line x1="334" y1="120" x2="338" y2="122" stroke="#3A281C" stroke-width="0.8" opacity="0.6" />
+                <!-- Upper eyelid crease (depth) -->
+                <path d="M306,136 Q313,131 321,133 Q329,131 336,136" stroke="#E4A07A" stroke-width="1.1" fill="none" opacity=".38"/>
 
-                <!-- Nariz modelada -->
-                <path d="M316,148 Q314,156 319,159 Q324,156 326,148" stroke="#C9926A" stroke-width="1.5" fill="none" />
-                <ellipse cx="317" cy="158" rx="2.2" ry="1.5" fill="#B5835A" opacity="0.3" />
-                <ellipse cx="325" cy="158" rx="2.2" ry="1.5" fill="#B5835A" opacity="0.3" />
+                <!-- Eye whites (almond shape) -->
+                <ellipse cx="313" cy="138" rx="6.5" ry="6.2" fill="white"/>
+                <ellipse cx="329" cy="138" rx="6.5" ry="6.2" fill="white"/>
+                <!-- Iris (warm hazel) -->
+                <circle cx="314" cy="139" r="4.6"  fill="#7A4828"/>
+                <circle cx="330" cy="139" r="4.6"  fill="#7A4828"/>
+                <!-- Pupil -->
+                <circle cx="315" cy="140" r="2.6"  fill="#100800"/>
+                <circle cx="331" cy="140" r="2.6"  fill="#100800"/>
+                <!-- Catchlights — 2 per eye -->
+                <circle cx="317" cy="137" r="1.4"  fill="white"/>
+                <circle cx="333" cy="137" r="1.4"  fill="white"/>
+                <circle cx="313" cy="141" r=".65"  fill="white" opacity=".6"/>
+                <circle cx="329" cy="141" r=".65"  fill="white" opacity=".6"/>
+                <!-- Lashes top (delicate) -->
+                <path d="M307,133 Q313,128 321,132" stroke="#280E04" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                <path d="M321,132 Q328,128 336,133" stroke="#280E04" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                <!-- Lower lid -->
+                <path d="M307,143 Q313,147 321,144" stroke="#D69A72" stroke-width=".9" fill="none" opacity=".4"/>
+                <path d="M321,144 Q328,147 335,143" stroke="#D69A72" stroke-width=".9" fill="none" opacity=".4"/>
 
-                <!-- Boca con volumen -->
-                <path d="M311,167 Q315,164 321,166 Q327,164 331,167" fill="#D46F6F" stroke="#B05050" stroke-width="1.2" />
-                <path d="M311,167 Q321,174 331,167" fill="#E28A8A" />
-                <path d="M316,170 Q321,172 326,170" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" fill="none" stroke-linecap="round" />
+                <!-- Nose (refined) -->
+                <path d="M318,150 Q315,159 318,163 Q321,166 324,163 Q327,159 324,150"
+                      stroke="#C8A080" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+                <ellipse cx="317" cy="163" rx="2.4" ry="1.6" fill="#C8A080" opacity=".35"/>
+                <ellipse cx="325" cy="163" rx="2.4" ry="1.6" fill="#C8A080" opacity=".35"/>
 
-                <!-- Colorete suave -->
-                <ellipse cx="302" cy="152" rx="7" ry="4" fill="#F4A68A" opacity="0.2" />
-                <ellipse cx="340" cy="152" rx="7" ry="4" fill="#F4A68A" opacity="0.2" />
+                <!-- Lips (full, rosy, smiling) -->
+                <path d="M311,169 Q315,164 321,166 Q327,164 331,169" fill="#CF7E76" stroke="#BA6A62" stroke-width=".7"/>
+                <path d="M311,169 Q321,178 331,169" fill="#DF9A92"/>
+                <!-- Lip shine -->
+                <path d="M316,171 Q321,174 326,171" stroke="rgba(255,255,255,.38)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                <!-- Smile lines (gentle) -->
+                <path d="M309,170 Q307,174 309,177" stroke="#CCA080" stroke-width="1.1" fill="none" opacity=".38"/>
+                <path d="M333,170 Q335,174 333,177" stroke="#CCA080" stroke-width="1.1" fill="none" opacity=".38"/>
+                <!-- Blush -->
+                <ellipse cx="303" cy="156" rx="8"   ry="5" fill="#F2845C" opacity=".16"/>
+                <ellipse cx="339" cy="156" rx="8"   ry="5" fill="#F2845C" opacity=".16"/>
 
-                <!-- Líneas de expresión muy sutiles (propias de 30 años) -->
-                <path d="M308,143 L312,144" stroke="#B5835A" stroke-width="0.8" opacity="0.2" stroke-linecap="round" />
-                <path d="M330,143 L334,144" stroke="#B5835A" stroke-width="0.8" opacity="0.2" stroke-linecap="round" />
-
-                <!-- Barbilla y mandíbula -->
-                <path d="M306,171 Q321,184 336,171" stroke="#B5835A" stroke-width="1" fill="none" opacity="0.4" />
-
-                <!-- Mascarilla bajada -->
-                <path d="M305,174 Q321,186 337,174 Q337,192 321,194 Q305,192 305,174 Z" fill="#FFB6C1" opacity="0.4" stroke="#FF99AA" stroke-width="0.8" />
-
-                <!-- Accesorios universitarios -->
-                <rect x="333" y="169" width="17" height="13" rx="3" fill="#F4D03F" />
-                <text x="336" y="180" font-family="Arial, sans-serif" font-size="5" fill="#1A2B3C" font-weight="bold">INTERN</text>
-                <rect x="354" y="176" width="16" height="22" rx="4" fill="#5D9B9B" />
-                <ellipse cx="358" cy="198" rx="3" ry="2" fill="#1E2F4A" />
-                <ellipse cx="366" cy="198" rx="3" ry="2" fill="#1E2F4A" />
-                <!-- Teléfono en bolsillo -->
-                <rect x="294" y="177" width="8" height="12" rx="1.5" fill="#222" />
-                <circle cx="298" cy="183" r="1.2" fill="#0F0" />
-                <!-- Estetoscopio realista -->
-                <path d="M312,172 Q319,190 324,194 Q329,198 326,190" stroke="#FF9AAD" stroke-width="3" fill="none" stroke-linecap="round" />
-                <circle cx="325" cy="194" r="5" fill="#CCCCCC" stroke="#AAAAAA" stroke-width="1" />
-                <circle cx="325" cy="194" r="2.5" fill="#555555" />
+                <!-- Mask lowered (teal, on chin) -->
+                <path d="M305,175 Q321,187 337,175 Q337,192 321,194 Q305,192 305,175 Z"
+                      fill="#A8E6D8" opacity=".7" stroke="#86CEC0" stroke-width=".9"/>
+                <path d="M305,177 Q299,169 299,160" stroke="#A8E6D8" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".5"/>
+                <path d="M337,177 Q343,169 343,160" stroke="#A8E6D8" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".5"/>
               </g>
-            </g>
+            </g><!-- end dentist -->
 
-            <!-- ========== NIÑO (realista, con alegría) ========== -->
-            <g class="gC" id="childG" filter="url(#softSkin)">
+            <!-- ══════════════════════════════
+                 CHILD  –  running with joy
+                 Cute face, smaller build
+            ══════════════════════════════ -->
+            <g class="gC" id="childG">
               <g class="hop">
-                <ellipse cx="148" cy="292" rx="24" ry="6.5" fill="rgba(0,0,0,0.1)" />
-                <!-- Cuerpo (jeans, camiseta) similar al anterior pero con mejor piel -->
-                <ellipse cx="146" cy="180" rx="21" ry="23" fill="url(#skinChild)" />
-                <rect x="137" y="197" width="17" height="16" rx="5.5" fill="url(#skinChild)" />
-                <!-- Ojos grandes y brillantes -->
-                <ellipse cx="138" cy="176" rx="8" ry="8.5" fill="white" />
-                <ellipse cx="154" cy="176" rx="8" ry="8.5" fill="white" />
-                <circle cx="139" cy="177" r="5.5" fill="url(#irisChild)" />
-                <circle cx="155" cy="177" r="5.5" fill="url(#irisChild)" />
-                <circle cx="140" cy="178" r="3" fill="#0A0A0A" />
-                <circle cx="156" cy="178" r="3" fill="#0A0A0A" />
-                <circle cx="142" cy="173" r="1.8" fill="white" />
-                <circle cx="158" cy="173" r="1.8" fill="white" />
-                <!-- Ceja -->
-                <path d="M130,169 Q137,163 147,167" stroke="#3A2818" stroke-width="2" fill="none" />
-                <path d="M147,167 Q154,163 162,169" stroke="#3A2818" stroke-width="2" fill="none" />
-                <!-- Nariz pequeña -->
-                <circle cx="143" cy="188" r="2.2" fill="#D6A06A" opacity="0.36" />
-                <circle cx="149" cy="188" r="2.2" fill="#D6A06A" opacity="0.36" />
-                <!-- Boca feliz con dientes -->
-                <path d="M133,198 Q146,215 159,198" fill="#CC4444" stroke="#AE3030" stroke-width="1.1" />
-                <rect x="137" y="198" width="7" height="5.8" rx="2.5" fill="white" />
-                <rect x="145" y="198" width="7" height="5.8" rx="2.5" fill="white" />
-                <ellipse cx="146" cy="207" rx="7.5" ry="4.2" fill="#E07070" />
-                <!-- Mejillas rosadas -->
-                <ellipse cx="127" cy="188" rx="9" ry="6" fill="#F4845C" opacity="0.24" />
-                <ellipse cx="165" cy="188" rx="9" ry="6" fill="#F4845C" opacity="0.24" />
-                <!-- Cabello -->
-                <ellipse cx="146" cy="168" rx="24" ry="20" fill="url(#hairChild)" />
-                <path d="M124,175 Q124,154 146,149 Q168,154 168,175 Q169,186 166,196 L126,196 Q123,186 124,175 Z" fill="url(#hairChild)" />
-                <!-- Ropa: camiseta amarilla, jeans -->
-                <rect x="127" y="202" width="38" height="54" rx="11" fill="#FFD966" />
-                <path d="M136,202 Q146,211 156,202" fill="#FFC820" />
-                <!-- Brazos y piernas (con piel) -->
-                <path d="M159,210 Q168,230 166,250" stroke="url(#skinChild)" stroke-width="12" stroke-linecap="round" fill="none" />
-                <path d="M130,210 Q121,230 118,250" stroke="url(#skinChild)" stroke-width="12" stroke-linecap="round" fill="none" />
-                <ellipse cx="165" cy="253" rx="8" ry="7" fill="url(#skinChild)" />
-                <ellipse cx="117" cy="253" rx="8" ry="7" fill="url(#skinChild)" />
-                <!-- Mochila -->
-                <rect x="157" y="194" width="20" height="26" rx="6" fill="#F2845C" />
-                <circle cx="156" cy="212" r="3.2" fill="#E8904A" />
+                <!-- Shadow -->
+                <ellipse cx="148" cy="292" rx="24" ry="6.5" fill="rgba(0,0,0,.10)"/>
+
+                <!-- Backpack -->
+                <rect x="157" y="194" width="20" height="26" rx="6" fill="#F2845C"/>
+                <rect x="159" y="200" width="16" height="11" rx="3" fill="#D66A42"/>
+                <path d="M159,196 Q154,207 157,223" stroke="#BE5030" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                <circle cx="156" cy="212" r="3.2" fill="#E8904A" stroke="#C05530" stroke-width=".9"/>
+
+                <!-- Legs -->
+                <g class="lB">
+                  <path d="M152,252 Q157,274 154,294" stroke="url(#jeans)" stroke-width="16" stroke-linecap="round" fill="none"/>
+                  <ellipse cx="153" cy="295" rx="12.5" ry="5.5" fill="#DD3838"/>
+                  <ellipse cx="150" cy="292" rx="6" ry="2.8" fill="#EE5252" opacity=".4"/>
+                  <path d="M147,291 L159,291" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                </g>
+                <g class="lF">
+                  <path d="M140,252 Q136,274 138,294" stroke="url(#jeans)" stroke-width="16" stroke-linecap="round" fill="none"/>
+                  <ellipse cx="138" cy="295" rx="12.5" ry="5.5" fill="#DD3838"/>
+                  <ellipse cx="135" cy="292" rx="6" ry="2.8" fill="#EE5252" opacity=".4"/>
+                  <path d="M132,291 L144,291" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                </g>
+
+                <!-- Shirt -->
+                <rect x="127" y="202" width="38" height="54" rx="11" fill="url(#shirt)"/>
+                <path d="M136,202 Q146,211 156,202" fill="#FFC820" stroke="#E8B010" stroke-width=".8"/>
+                <rect x="129" y="233" width="38" height="5.5" rx="0" fill="#FFC428" opacity=".5"/>
+                <rect x="130" y="214" width="11" height="9"   rx="2.5" fill="#FFD050" stroke="#E8B818" stroke-width=".8" opacity=".8"/>
+
+                <!-- Back arm -->
+                <g class="aB">
+                  <path d="M159,210 Q168,230 166,250" stroke="url(#skC)" stroke-width="11" stroke-linecap="round" fill="none"/>
+                  <ellipse cx="165" cy="253" rx="8" ry="7" fill="url(#skC)"/>
+                </g>
+                <!-- Front arm reaching toward dentist -->
+                <g class="aF">
+                  <path d="M130,210 Q121,230 118,250" stroke="url(#skC)" stroke-width="11" stroke-linecap="round" fill="none"/>
+                  <ellipse cx="117" cy="253" rx="8" ry="7" fill="url(#skC)"/>
+                  <!-- Fingers reaching out -->
+                  <path d="M111,247 Q106,240 108,234 M115,245 Q111,238 114,232 M119,244 Q118,237 121,231 M123,246 Q124,239 128,235"
+                        stroke="#DDB87A" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                </g>
+
+                <!-- ══ HEAD  Child  (super cute, big eyes) ══ -->
+                <!-- Hair back -->
+                <ellipse cx="146" cy="168" rx="24" ry="20" fill="url(#hC)"/>
+                <!-- Hair front wrapping face -->
+                <path d="M124,175 Q124,154 146,149 Q168,154 168,175 Q169,186 166,196 L126,196 Q123,186 124,175 Z" fill="url(#hC)"/>
+                <!-- Hair highlight -->
+                <path d="M126,178 Q136,165 146,161 Q156,165 166,178" stroke="#160C04" stroke-width="1.3" fill="none" opacity=".3"/>
+                <!-- Cute cowlick -->
+                <path d="M142,149 Q145,139 150,148" stroke="#160C04" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+
+                <!-- Face (round, cute proportions) -->
+                <ellipse cx="146" cy="180" rx="21" ry="23" fill="url(#skC)"/>
+                <!-- Neck -->
+                <rect x="137" y="197" width="17" height="16" rx="5.5" fill="url(#skC)"/>
+
+                <!-- Ears -->
+                <ellipse cx="125" cy="182" rx="6" ry="7.5" fill="#EDCA98"/>
+                <ellipse cx="126" cy="182" rx="3.2" ry="4.8" fill="#E2B880" opacity=".5"/>
+                <ellipse cx="167" cy="182" rx="6" ry="7.5" fill="#EDCA98"/>
+                <ellipse cx="166" cy="182" rx="3.2" ry="4.8" fill="#E2B880" opacity=".5"/>
+
+                <!-- Eyebrows (raised high = EXCITED!) -->
+                <path d="M134,168 Q140,161 148,164" stroke="#3A2818" stroke-width="2"   fill="none" stroke-linecap="round"/>
+                <path d="M146,164 Q154,161 160,168" stroke="#3A2818" stroke-width="2"   fill="none" stroke-linecap="round"/>
+
+                <!-- Big sparkly eyes -->
+                <ellipse cx="138" cy="176" rx="8.5" ry="8.8" fill="white"/>
+                <ellipse cx="154" cy="176" rx="8.5" ry="8.8" fill="white"/>
+                <!-- Iris (deep warm brown) -->
+                <circle cx="139" cy="177" r="6.2"  fill="#4C3020"/>
+                <circle cx="155" cy="177" r="6.2"  fill="#4C3020"/>
+                <!-- Pupil -->
+                <circle cx="140" cy="178" r="3.5"  fill="#0C0600"/>
+                <circle cx="156" cy="178" r="3.5"  fill="#0C0600"/>
+                <!-- Large catchlight -->
+                <circle cx="142" cy="174" r="2"    fill="white"/>
+                <circle cx="158" cy="174" r="2"    fill="white"/>
+                <!-- Small catchlight -->
+                <circle cx="137" cy="179" r=".85"  fill="white" opacity=".65"/>
+                <circle cx="153" cy="179" r=".85"  fill="white" opacity=".65"/>
+                <!-- Lower lid subtle shine -->
+                <path d="M131,182 Q138,187 147,184" stroke="#D2A070" stroke-width=".85" fill="none" opacity=".38"/>
+                <path d="M147,184 Q154,187 161,182" stroke="#D2A070" stroke-width=".85" fill="none" opacity=".38"/>
+                <!-- Lashes -->
+                <path d="M130,169 Q137,163 147,167" stroke="#120600" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+                <path d="M147,167 Q154,163 162,169" stroke="#120600" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+
+                <!-- Cute button nose -->
+                <circle cx="143" cy="188" r="2.2" fill="#D6A06A" opacity=".36"/>
+                <circle cx="149" cy="188" r="2.2" fill="#D6A06A" opacity=".36"/>
+                <path d="M142,191 Q146,194 150,191" stroke="#C08850" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+                <!-- BIG happy open laugh -->
+                <path d="M133,198 Q146,215 159,198" fill="#CC4444" stroke="#AE3030" stroke-width="1.1"/>
+                <!-- Top teeth -->
+                <rect x="137" y="198" width="7"   height="5.8" rx="2.5" fill="white"/>
+                <rect x="145" y="198" width="7"   height="5.8" rx="2.5" fill="white"/>
+                <rect x="153" y="198" width="5.5" height="5.8" rx="2.5" fill="white"/>
+                <!-- Tongue -->
+                <ellipse cx="146" cy="207" rx="7.5" ry="4.2" fill="#E07070"/>
+                <!-- Dimples -->
+                <circle cx="131" cy="197" r="2.8" fill="#D6A06A" opacity=".36"/>
+                <circle cx="161" cy="197" r="2.8" fill="#D6A06A" opacity=".36"/>
+                <!-- Rosy cheeks -->
+                <ellipse cx="127" cy="188" rx="9"   ry="6"   fill="#F4845C" opacity=".24"/>
+                <ellipse cx="165" cy="188" rx="9"   ry="6"   fill="#F4845C" opacity=".24"/>
               </g>
-            </g>
+            </g><!-- end child -->
 
-            <!-- ========== ELEMENTOS DE ANIMACIÓN (hug, burbuja, trail) ========== -->
-            <g class="hug" filter="url(#softShadow)">
-              <circle cx="246" cy="212" r="32" fill="rgba(242,132,92,0.1)" />
-              <circle cx="246" cy="212" r="20" fill="rgba(242,132,92,0.16)" />
-              <path d="M246,230 C246,220 234,215 234,224 C234,215 222,220 222,230 C222,241 246,256 246,256 C246,256 270,241 270,230 C270,220 258,215 258,224 C258,215 246,220 246,230 Z" fill="#F2845C" />
-            </g>
-
-            <!-- Trail de movimiento -->
-            <ellipse class="tr t1" cx="38" cy="290" rx="5.5" ry="2.8" />
-            <ellipse class="tr t2" cx="68" cy="289" rx="6" ry="2.8" />
-            <ellipse class="tr t3" cx="96" cy="290" rx="5.5" ry="2.5" />
-            <ellipse class="tr t4" cx="122" cy="289" rx="4.5" ry="2.2" />
-
-            <!-- Burbuja de diálogo -->
-            <g class="bub" filter="url(#softShadow)">
-              <rect x="364" y="110" width="90" height="52" rx="11" fill="white" stroke="#D0E0DA" stroke-width="1.3" />
-              <path d="M372,162 L360,176 L390,162 Z" fill="white" stroke="#D0E0DA" stroke-width="1" />
-              <text x="377" y="129" font-family="Outfit, sans-serif" font-size="10" font-weight="700" fill="#1A2B3C">¡Hola, campeón!</text>
-              <text x="377" y="144" font-family="Outfit, sans-serif" font-size="8.8" fill="#4A5A68">¡Te esperaba</text>
-              <text x="377" y="157" font-family="Outfit, sans-serif" font-size="8.8" fill="#4A5A68">con ansias! 🦷✨</text>
+            <!-- ══ HUG BURST ══ -->
+            <g class="hug" filter="url(#fs)">
+              <circle cx="246" cy="212" r="32" fill="rgba(242,132,92,.10)"/>
+              <circle cx="246" cy="212" r="20" fill="rgba(242,132,92,.16)"/>
+              <!-- Heart -->
+              <path d="M246,230 C246,220 234,215 234,224 C234,215 222,220 222,230 C222,241 246,256 246,256 C246,256 270,241 270,230 C270,220 258,215 258,224 C258,215 246,220 246,230 Z" fill="#F2845C"/>
+              <!-- Heart highlight -->
+              <path d="M233,223 Q241,217 247,223" stroke="rgba(255,255,255,.45)" stroke-width="2" fill="none" stroke-linecap="round"/>
             </g>
 
             <!-- Sparkles -->
             <g class="sp s1"><path d="M210,178 L212.5,186 L220,186 L214,191 L216.5,199 L210,194 L203.5,199 L206,191 L200,186 L207.5,186 Z" fill="#F2845C"/></g>
-            <g class="sp s2"><circle cx="288" cy="165" r="5.5" fill="#2EBAA0"/></g>
+            <g class="sp s2"><circle cx="288" cy="165" r="5.5" fill="#2EBAA0"/><path d="M281,165 L295,165 M288,158 L288,172" stroke="white" stroke-width="1.6" stroke-linecap="round"/></g>
             <g class="sp s3"><path d="M192,204 L194,210 L200,210 L195.5,214 L197.5,220 L192,216 L186.5,220 L188.5,214 L184,210 L190,210 Z" fill="#FFD166"/></g>
-            <g class="sp s4"><circle cx="300" cy="198" r="4.2" fill="#F2845C" opacity="0.8"/></g>
+            <g class="sp s4"><circle cx="300" cy="198" r="4.2" fill="#F2845C" opacity=".8"/></g>
             <g class="sp s5"><path d="M228,168 L230,174 L236,174 L231.5,178 L233.5,184 L228,180 L222.5,184 L224.5,178 L220,174 L226,174 Z" fill="#2EBAA0"/></g>
+
+            <!-- Speech bubble -->
+            <g class="bub" filter="url(#fs)">
+              <rect x="364" y="110" width="90" height="52" rx="11" fill="white" stroke="#DCEAE4" stroke-width="1.3"/>
+              <path d="M372,162 L360,176 L390,162 Z" fill="white" stroke="#DCEAE4" stroke-width="1"/>
+              <text x="377" y="129" font-family="Outfit,sans-serif" font-size="10"   font-weight="700" fill="#1A2B3C">¡Hola, campeón!</text>
+              <text x="377" y="144" font-family="Outfit,sans-serif" font-size="8.8"  fill="#8095A4">¡Te esperaba</text>
+              <text x="377" y="157" font-family="Outfit,sans-serif" font-size="8.8"  fill="#8095A4">con ansias! 🦷✨</text>
+            </g>
+
           </svg>
         </div>
 
@@ -488,7 +579,7 @@
     </div>
   </section>
 
-  <!-- ===== SERVICIOS (sin cambios) ===== -->
+  <!-- ===== SERVICES ===== -->
   <section class="services" id="servicios">
     <div class="container">
       <div class="section-header reveal">
@@ -500,32 +591,34 @@
         <div class="service-card reveal">
           <div class="service-icon icon-1">🦷</div>
           <h3>Odontología Infantil</h3>
-          <p>Tratamientos preventivos y restaurativos adaptados a las necesidades únicas de los niños.</p>
+          <p>Tratamientos preventivos y restaurativos adaptados a las necesidades únicas de los niños, en un ambiente
+            seguro y divertido.</p>
         </div>
         <div class="service-card reveal">
           <div class="service-icon icon-2">🧩</div>
           <h3>Ortopedia Maxilar</h3>
-          <p>Corrección temprana del crecimiento de los maxilares para una mordida saludable.</p>
+          <p>Corrección temprana del crecimiento de los maxilares para un desarrollo facial armónico y una mordida
+            saludable.</p>
         </div>
         <div class="service-card reveal">
           <div class="service-icon icon-3">✨</div>
           <h3>Ortodoncia Preventiva</h3>
-          <p>Diagnóstico y tratamiento para guiar la correcta posición de los dientes.</p>
+          <p>Diagnóstico y tratamiento oportuno para guiar la correcta posición de los dientes desde temprana edad.</p>
         </div>
         <div class="service-card reveal">
           <div class="service-icon icon-4">🪥</div>
           <h3>Higiene Oral Infantil</h3>
-          <p>Educación y profilaxis para crear hábitos de cuidado bucal.</p>
+          <p>Educación y profilaxis dental para crear hábitos de cuidado bucal que durarán toda la vida.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== ABOUT (sin cambios) ===== -->
+  <!-- ===== ABOUT ===== -->
   <section class="about" id="nosotros">
     <div class="container">
       <div class="about-image reveal-left">
-        <img src="about.png" alt="Dra. Martha Estrada" loading="lazy" />
+        <img src="about.png" alt="Dra. Martha Estrada atendiendo a un paciente" loading="lazy" />
         <div class="experience-badge">
           <h3>30+</h3>
           <p>Años de<br>Experiencia</p>
@@ -534,7 +627,16 @@
       <div class="about-content reveal-right">
         <div class="section-tag">Sobre Nosotros</div>
         <h2>Dra. Martha Estrada</h2>
-        <p>Con más de 30 años de trayectoria, la Dra. Martha Estrada es referente en Odontología Infantil y Ortopedia Maxilar en Cali.</p>
+        <p class="about-text">
+          Con más de 30 años de trayectoria profesional, la Dra. Martha Estrada es una referente en Odontología Infantil
+          y Ortopedia Maxilar en Cali. Como parte de <strong>SmileTrain</strong>, combina décadas de experiencia
+          clínica con las técnicas más avanzadas para ofrecer tratamientos efectivos y un cuidado excepcional.
+        </p>
+        <p class="about-text">
+          Su filosofía se centra en crear experiencias positivas para los niños, transformando cada visita al dentista
+          en un momento agradable y educativo. La confianza de miles de familias caleñas respalda su compromiso con la
+          salud bucal infantil.
+        </p>
         <div class="about-features">
           <div class="about-feature"><span>🎓</span> Especialista certificada</div>
           <div class="about-feature"><span>👶</span> Enfoque pediátrico</div>
@@ -546,116 +648,331 @@
     </div>
   </section>
 
-  <!-- ===== WHY US (sin cambios) ===== -->
+  <!-- ===== WHY US ===== -->
   <section class="why-us" id="porque">
     <div class="container">
       <div class="section-header reveal">
         <div class="section-tag">¿Por Qué Elegirnos?</div>
         <h2>Tu hijo merece la mejor atención</h2>
-        <p>Cada detalle está pensado para brindar la experiencia dental más confortable.</p>
+        <p>Cada detalle está pensado para brindar la experiencia dental más confortable y segura.</p>
       </div>
       <div class="why-grid">
-        <div class="why-card reveal"><div class="why-icon">👩‍⚕️</div><h3>30+ Años de Experiencia</h3><p>Décadas de conocimiento que garantizan tratamientos seguros.</p></div>
-        <div class="why-card reveal"><div class="why-icon">🎨</div><h3>Ambiente Infantil</h3><p>Espacios diseñados para que los niños se sientan felices.</p></div>
-        <div class="why-card reveal"><div class="why-icon">🔬</div><h3>Tecnología Avanzada</h3><p>Equipos de última generación para diagnósticos precisos.</p></div>
-        <div class="why-card reveal"><div class="why-icon">❤️</div><h3>Trato con Amor</h3><p>Cada niño es especial, generamos confianza y una relación positiva.</p></div>
-        <div class="why-card reveal"><div class="why-icon">📋</div><h3>Plan Personalizado</h3><p>Tratamientos adaptados a la edad y necesidades.</p></div>
-        <div class="why-card reveal"><div class="why-icon">🌟</div><h3>SmileTrain</h3><p>Respaldados por una red de excelencia odontológica.</p></div>
+        <div class="why-card reveal">
+          <div class="why-icon">👩‍⚕️</div>
+          <h3>30+ Años de Experiencia</h3>
+          <p>Décadas de conocimiento y práctica que garantizan tratamientos seguros y efectivos para tu hijo.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-icon">🎨</div>
+          <h3>Ambiente Infantil</h3>
+          <p>Espacios diseñados especialmente para que los niños se sientan cómodos, seguros y felices.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-icon">🔬</div>
+          <h3>Tecnología Avanzada</h3>
+          <p>Equipos de última generación para diagnósticos precisos y tratamientos mínimamente invasivos.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-icon">❤️</div>
+          <h3>Trato con Amor</h3>
+          <p>Cada niño es especial. Nos tomamos el tiempo para generar confianza y una relación positiva.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-icon">📋</div>
+          <h3>Plan Personalizado</h3>
+          <p>Tratamientos adaptados a la edad, necesidades y desarrollo individual de cada paciente.</p>
+        </div>
+        <div class="why-card reveal">
+          <div class="why-icon">🌟</div>
+          <h3>SmileTrain</h3>
+          <p>Respaldados por una red de excelencia odontológica con los más altos estándares de calidad.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== TESTIMONIALS (sin cambios) ===== -->
+  <!-- ===== TESTIMONIALS ===== -->
   <section class="testimonials" id="testimonios">
     <div class="container">
       <div class="section-header reveal">
         <div class="section-tag">Testimonios</div>
         <h2>Lo que dicen las familias</h2>
-        <p>La confianza de nuestros pacientes es nuestro mayor logro.</p>
+        <p>La confianza y satisfacción de nuestros pacientes es nuestro mayor logro.</p>
       </div>
       <div class="testimonials-slider reveal">
         <div class="testimonial-track" id="testimonialTrack">
-          <div class="testimonial-card"><div class="testimonial-inner"><div class="testimonial-stars">⭐⭐⭐⭐⭐</div><p class="testimonial-text">"Mi hijo tenía miedo, pero la Dra. Martha lo hizo sentir tan cómodo que ahora pide ir."</p><div class="testimonial-author"><div class="testimonial-avatar">CP</div><div><h4>Carolina Pérez</h4><p>Mamá de Santiago</p></div></div></div></div>
-          <div class="testimonial-card"><div class="testimonial-inner"><div class="testimonial-stars">⭐⭐⭐⭐⭐</div><p class="testimonial-text">"Llevamos a nuestros tres hijos con la Dra. Estrada, excelente profesional."</p><div class="testimonial-author"><div class="testimonial-avatar">AM</div><div><h4>Andrés Martínez</h4><p>Papá de Valentina</p></div></div></div></div>
-          <div class="testimonial-card"><div class="testimonial-inner"><div class="testimonial-stars">⭐⭐⭐⭐⭐</div><p class="testimonial-text">"Detectó a tiempo un problema de mordida, ahora mi hija tiene una sonrisa perfecta."</p><div class="testimonial-author"><div class="testimonial-avatar">LR</div><div><h4>Laura Rodríguez</h4><p>Mamá de Isabella</p></div></div></div></div>
+          <div class="testimonial-card">
+            <div class="testimonial-inner">
+              <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+              <p class="testimonial-text">
+                Mi hijo tenía mucho miedo al dentista, pero la Dra. Martha lo hizo sentir tan cómodo que ahora pide ir a
+                sus citas. Es maravillosa con los niños, muy paciente y profesional. ¡La recomiendo 100%!
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">CP</div>
+                <div class="testimonial-info">
+                  <h4>Carolina Pérez</h4>
+                  <p>Mamá de Santiago, 6 años</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-inner">
+              <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+              <p class="testimonial-text">
+                Llevamos a nuestros tres hijos con la Dra. Estrada desde que eran bebés. La ortopedia maxilar que le
+                realizó a nuestra hija mayor fue un éxito total. Profesionalismo y cariño en cada consulta.
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">AM</div>
+                <div class="testimonial-info">
+                  <h4>Andrés Martínez</h4>
+                  <p>Papá de Valentina, 10 años</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-inner">
+              <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+              <p class="testimonial-text">
+                Excelente doctora. Detectó a tiempo un problema de mordida en mi hija y con el tratamiento de ortopedia
+                ahora tiene una sonrisa perfecta. El consultorio es hermoso y muy limpio. ¡Totalmente recomendada!
+              </p>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">LR</div>
+                <div class="testimonial-info">
+                  <h4>Laura Rodríguez</h4>
+                  <p>Mamá de Isabella, 8 años</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="slider-dots" id="sliderDots">
-          <button class="slider-dot active" data-index="0"></button>
-          <button class="slider-dot" data-index="1"></button>
-          <button class="slider-dot" data-index="2"></button>
+          <button class="slider-dot active" data-index="0" aria-label="Testimonio 1"></button>
+          <button class="slider-dot" data-index="1" aria-label="Testimonio 2"></button>
+          <button class="slider-dot" data-index="2" aria-label="Testimonio 3"></button>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== APPOINTMENT (sin cambios) ===== -->
+  <!-- ===== APPOINTMENT ===== -->
   <section class="appointment" id="cita">
     <div class="container">
       <div class="appointment-info reveal-left">
         <div class="section-tag" style="justify-content:flex-start">Agendar Cita</div>
         <h2>Reserva la cita de tu hijo hoy</h2>
-        <p>Completa el formulario y nos pondremos en contacto para confirmar.</p>
+        <p>Completa el formulario y nos pondremos en contacto contigo para confirmar la fecha y hora de tu cita. ¡El
+          primer paso hacia una sonrisa saludable!</p>
         <div class="appointment-benefits">
-          <div class="benefit-item"><div class="benefit-icon">⏰</div><div><h4>Respuesta rápida</h4><p>Confirmación en menos de 24h</p></div></div>
-          <div class="benefit-item"><div class="benefit-icon">💳</div><div><h4>Valoración inicial</h4><p>Primera consulta de diagnóstico</p></div></div>
-          <div class="benefit-item"><div class="benefit-icon">🗓️</div><div><h4>Horarios flexibles</h4><p>Nos adaptamos a tu agenda</p></div></div>
+          <div class="benefit-item">
+            <div class="benefit-icon">⏰</div>
+            <div>
+              <h4>Respuesta rápida</h4>
+              <p>Te confirmamos tu cita en menos de 24 horas</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">💳</div>
+            <div>
+              <h4>Valoración inicial</h4>
+              <p>Primera consulta de diagnóstico integral</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🗓️</div>
+            <div>
+              <h4>Horarios flexibles</h4>
+              <p>Nos adaptamos a tu agenda familiar</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="appointment-form-wrapper reveal-right">
         <h3>📋 Datos de la Cita</h3>
+        <p>Todos los campos son requeridos</p>
         <form id="appointmentForm">
-          <!-- campos igual que antes, omitidos por brevedad pero se mantienen -->
-          <button type="submit" class="btn-submit">Solicitar Cita →</button>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="parentName">Nombre del padre/madre</label>
+              <input type="text" id="parentName" name="parentName" placeholder="Tu nombre completo" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input type="tel" id="phone" name="phone" placeholder="300 123 4567" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tucorreo@email.com" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="childName">Nombre del niño(a)</label>
+              <input type="text" id="childName" name="childName" placeholder="Nombre del paciente" required />
+            </div>
+            <div class="form-group">
+              <label for="childAge">Edad del niño(a)</label>
+              <input type="number" id="childAge" name="childAge" placeholder="Ej: 5" min="0" max="18" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="service">Servicio de interés</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Selecciona un servicio</option>
+              <option value="Odontología Infantil">Odontología Infantil</option>
+              <option value="Ortopedia Maxilar">Ortopedia Maxilar</option>
+              <option value="Ortodoncia Preventiva">Ortodoncia Preventiva</option>
+              <option value="Higiene Oral Infantil">Higiene Oral Infantil</option>
+              <option value="Valoración General">Valoración General</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="preferredDate">Fecha preferida</label>
+              <input type="date" id="preferredDate" name="preferredDate" required />
+            </div>
+            <div class="form-group">
+              <label for="preferredTime">Horario preferido</label>
+              <select id="preferredTime" name="preferredTime" required>
+                <option value="" disabled selected>Selecciona horario</option>
+                <option value="Mañana (8am - 12pm)">Mañana (8am - 12pm)</option>
+                <option value="Tarde (2pm - 6pm)">Tarde (2pm - 6pm)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="notes">Notas adicionales (opcional)</label>
+            <textarea id="notes" name="notes"
+              placeholder="¿Algo que debamos saber? (alergias, condiciones especiales, etc.)"></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="spinner"></span>
+            <span class="btn-text">Solicitar Cita →</span>
+          </button>
         </form>
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">✅</div>
+          <h3>¡Solicitud Enviada!</h3>
+          <p>Hemos enviado la confirmación a tu correo electrónico y notificado a la Dra. Martha Estrada. Nos pondremos
+            en contacto pronto para confirmar tu cita.</p>
+          <button type="button" id="downloadReminder" class="btn-reminder">
+            📅 Descargar Recordatorio al Calendario
+          </button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== LOCATION (sin cambios) ===== -->
+  <!-- ===== LOCATION ===== -->
   <section class="location" id="ubicacion">
     <div class="container">
       <div class="section-header reveal">
         <div class="section-tag">Ubicación</div>
         <h2>Encuéntranos fácilmente</h2>
-        <p>Estamos en una ubicación privilegiada, de fácil acceso.</p>
+        <p>Estamos en una ubicación privilegiada, de fácil acceso para toda la familia.</p>
       </div>
       <div class="location-grid">
         <div class="map-container reveal-left">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.5!2d-76.535!3d3.3738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a692e0e7b8d3%3A0x4b5e7f0e4e0c0f0!2sHolguines%20Trade%20Center!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco" allowfullscreen="" loading="lazy"></iframe>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.5!2d-76.535!3d3.3738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a692e0e7b8d3%3A0x4b5e7f0e4e0c0f0!2sHolguines%20Trade%20Center!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Ubicación del consultorio">
+          </iframe>
         </div>
         <div class="location-details reveal-right">
-          <div class="location-card"><div class="loc-icon">📍</div><div><h4>Dirección</h4><p>Holguines Trade Center, Cra. 100 #11-60, Cali</p></div></div>
-          <div class="location-card"><div class="loc-icon">🕐</div><div><h4>Horarios</h4><p>Lun-Vie 8am-6pm, Sáb 8am-1pm</p></div></div>
-          <div class="location-card"><div class="loc-icon">📧</div><div><h4>Email</h4><p>infantilodonto@gmail.com</p></div></div>
-          <div class="location-card"><div class="loc-icon">📱</div><div><h4>WhatsApp</h4><p>+57 310 423 5804</p></div></div>
+          <div class="location-card">
+            <div class="loc-icon">📍</div>
+            <div>
+              <h4>Dirección</h4>
+              <p>Holguines Trade Center<br>Cra. 100 #11-60, Ciudad Jardín<br>Cali, Valle del Cauca — 6to Piso</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <div class="loc-icon">🕐</div>
+            <div>
+              <h4>Horarios de Atención</h4>
+              <p>Lunes a Viernes: 8:00 AM – 6:00 PM<br>Sábados: 8:00 AM – 1:00 PM</p>
+            </div>
+          </div>
+          <div class="location-card">
+            <div class="loc-icon">📧</div>
+            <div>
+              <h4>Correo Electrónico</h4>
+              <p><a href="mailto:infantilodonto@gmail.com">infantilodonto@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="location-card">
+            <div class="loc-icon">📱</div>
+            <div>
+              <h4>WhatsApp / Teléfono</h4>
+              <p><a href="https://wa.me/573104235804" target="_blank">+57 310 423 5804</a></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== FOOTER (sin cambios) ===== -->
+  <!-- ===== FOOTER ===== -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="#" class="nav-logo"><div class="logo-icon">🦷</div> Dra. Martha <span>Estrada</span></a>
-          <p>Especialista en Odontología Infantil y Ortopedia Maxilar. Más de 30 años cuidando sonrisas.</p>
+          <a href="#" class="nav-logo">
+            <div class="logo-icon">🦷</div>
+            Dra. Martha <span>Estrada</span>
+          </a>
+          <p>Especialista en Odontología Infantil y Ortopedia Maxilar. Más de 30 años cuidando la sonrisa de los más
+            pequeños en Colombia.</p>
           <div class="footer-social">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/Dra.MarthaEstrada1"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me/573104235804"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/Dra.MarthaEstrada1" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/573104235804" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
-        <div class="footer-col"><h4>Navegación</h4><ul><li><a href="#inicio">Inicio</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#nosotros">Nosotros</a></li><li><a href="#testimonios">Testimonios</a></li></ul></div>
-        <div class="footer-col"><h4>Servicios</h4><ul><li><a href="#servicios">Odontología Infantil</a></li><li><a href="#servicios">Ortopedia Maxilar</a></li><li><a href="#servicios">Ortodoncia Preventiva</a></li><li><a href="#servicios">Higiene Oral</a></li></ul></div>
-        <div class="footer-col footer-newsletter"><h4>Contacto</h4><p>Holguines Trade Center, Cali</p><p><a href="mailto:infantilodonto@gmail.com">infantilodonto@gmail.com</a></p><a href="#cita" class="btn-primary">Agendar Cita</a></div>
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#testimonios">Testimonios</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="#servicios">Odontología Infantil</a></li>
+            <li><a href="#servicios">Ortopedia Maxilar</a></li>
+            <li><a href="#servicios">Ortodoncia Preventiva</a></li>
+            <li><a href="#servicios">Higiene Oral</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-newsletter">
+          <h4>Contacto</h4>
+          <p>Holguines Trade Center, Cra. 100 #11-60<br>Ciudad Jardín, Cali — 6to Piso</p>
+          <p style="margin-top:8px"><a href="mailto:infantilodonto@gmail.com"
+              style="color:var(--primary-light)">infantilodonto@gmail.com</a></p>
+          <a href="#cita" class="btn-primary"
+            style="margin-top:16px; display:inline-flex; font-size:0.9rem; padding:12px 24px;">Agendar Cita</a>
+        </div>
       </div>
-      <div class="footer-bottom"><p>© 2026 Dra. Martha Estrada — Odontologia. Todos los derechos reservados.</p><p>Hecho en Cali, Colombia</p></div>
+      <div class="footer-bottom">
+        <p>© 2026 Dra. Martha Estrada — Odontologia. Todos los derechos reservados.</p>
+        <p>Hecho en Cali, Colombia</p>
+      </div>
     </div>
   </footer>
 
   <!-- WhatsApp FAB -->
-  <a href="https://wa.me/573104235804" target="_blank" class="whatsapp-fab"><i class="fab fa-whatsapp"></i></a>
+  <a href="https://wa.me/573104235804?text=Hola, quiero agendar una cita con la Dra. Martha Estrada" target="_blank"
+    class="whatsapp-fab" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
   <script src="script.js"></script>
 </body>

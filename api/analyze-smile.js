@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'x-api-key': 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,
+        'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({

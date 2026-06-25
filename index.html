@@ -11,30 +11,28 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --primary: #0b7a6b;
-      --primary-light: #1a9b85;
-      --accent: #d4af37;
-      --dark: #0f1419;
-      --dark-secondary: #1a2332;
-      --light: #f5f7fa;
-      --light-gray: #e8eef5;
-      --text: #2c3e50;
-      --text-light: #5a6b7d;
+      --primary: #06b6a6;
+      --primary-light: #14d8c6;
+      --dark: #1a3a3a;
+      --text: #2d5a5a;
+      --text-light: #5a7d7d;
+      --cream: #faf8f3;
+      --light: #f0f5f5;
       --white: #ffffff;
-      --shadow: 0 12px 40px rgba(15, 20, 25, 0.12);
-      --shadow-sm: 0 4px 15px rgba(15, 20, 25, 0.08);
-      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow: 0 8px 32px rgba(6, 182, 166, 0.12);
+      --shadow-sm: 0 2px 8px rgba(6, 182, 166, 0.08);
+      --transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     
     html { scroll-behavior: smooth; font-size: 16px; }
     body { 
       font-family: 'Montserrat', sans-serif; 
-      background: var(--white); 
+      background: var(--cream); 
       color: var(--text); 
       overflow-x: hidden;
-      line-height: 1.6;
+      line-height: 1.7;
     }
-    h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.3; }
+    h1, h2, h3, h4, h5 { font-family: 'Lora', serif; font-weight: 600; line-height: 1.3; color: var(--dark); }
     p { color: var(--text-light); }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; display: block; }
@@ -50,28 +48,27 @@
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--primary);
       color: var(--white); 
-      padding: 13px 32px; 
-      border-radius: 6px;
+      padding: 14px 34px; 
+      border-radius: 50px;
       font-family: 'Montserrat', sans-serif; 
       font-weight: 600; 
       font-size: 0.95rem;
       transition: var(--transition); 
-      box-shadow: var(--shadow-sm);
-      border: 2px solid var(--primary);
+      box-shadow: 0 4px 16px rgba(6, 182, 166, 0.3);
+      border: none;
       cursor: pointer;
     }
     .btn-primary:hover { 
-      background: var(--dark);
-      border-color: var(--dark);
-      box-shadow: var(--shadow);
+      background: var(--primary-light);
+      box-shadow: 0 8px 24px rgba(6, 182, 166, 0.4);
       transform: translateY(-2px);
     }
     
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 8px;
       color: var(--primary); 
-      padding: 13px 32px; 
-      border-radius: 6px;
+      padding: 14px 34px; 
+      border-radius: 50px;
       border: 2px solid var(--primary); 
       font-family: 'Montserrat', sans-serif;
       font-weight: 600; 
@@ -83,22 +80,7 @@
     .btn-secondary:hover { 
       background: var(--primary); 
       color: var(--white);
-      box-shadow: var(--shadow-sm);
-    }
-    
-    .btn-ghost {
-      padding: 12px 28px;
-      border: 2px solid var(--primary);
-      color: var(--primary);
-      background: transparent;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .btn-ghost:hover {
-      background: var(--primary);
-      color: var(--white);
+      box-shadow: 0 4px 16px rgba(6, 182, 166, 0.3);
     }
 
     /* Navbar */
@@ -109,9 +91,10 @@
       right: 0; 
       z-index: 1000;
       transition: all var(--transition);
-      background: rgba(255, 255, 255, 0.98);
+      background: rgba(250, 248, 243, 0.98);
       backdrop-filter: blur(10px);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 12px rgba(6, 182, 166, 0.08);
+      padding: 0;
     }
     
     .navbar .container { 
@@ -124,7 +107,7 @@
     .nav-logo {
       display: flex; 
       align-items: center; 
-      gap: 12px;
+      gap: 10px;
       font-family: 'Lora', serif; 
       font-size: 1.3rem; 
       font-weight: 700; 
@@ -133,43 +116,55 @@
     }
     
     .nav-logo .logo-icon {
-      width: 40px; 
-      height: 40px;
+      width: 44px; 
+      height: 44px;
       background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-radius: 8px; 
+      border-radius: 12px; 
       display: flex; 
       align-items: center; 
       justify-content: center;
       font-size: 1.3rem; 
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 16px rgba(6, 182, 166, 0.25);
     }
+    
+    .nav-logo span { color: var(--primary); }
     
     .nav-links { 
       display: flex; 
       align-items: center; 
-      gap: 8px; 
+      gap: 4px; 
     }
     
     .nav-links > li > a {
       padding: 8px 14px; 
-      font-size: 0.88rem; 
+      font-size: 0.85rem; 
       font-weight: 500; 
       color: var(--text);
-      border-radius: 6px; 
+      border-radius: 8px; 
       transition: var(--transition);
       letter-spacing: 0.3px;
     }
     
     .nav-links > li > a:hover { 
-      background: var(--light-gray);
+      background: rgba(6, 182, 166, 0.1);
       color: var(--primary); 
+    }
+    
+    .nav-cta {
+      background: var(--primary) !important;
+      color: var(--white) !important;
+      box-shadow: 0 4px 12px rgba(6, 182, 166, 0.3);
+    }
+    
+    .nav-cta:hover {
+      background: var(--primary-light) !important;
     }
     
     .nav-social { 
       display: flex; 
       align-items: center; 
       gap: 10px;
-      margin-left: 16px;
+      margin-left: 12px;
     }
     
     .nav-social a {
@@ -181,7 +176,7 @@
       justify-content: center;
       font-size: 0.95rem; 
       transition: var(--transition);
-      background: var(--light-gray);
+      background: var(--light);
       color: var(--text);
       border: none;
     }
@@ -199,7 +194,7 @@
     /* Hero Section */
     .hero {
       min-height: 100vh;
-      background: linear-gradient(135deg, #f5f7fa 0%, #f0f4f8 100%);
+      background: linear-gradient(135deg, #f0f5f5 0%, #e8f3f3 50%, #f5f9f8 100%);
       display: flex; 
       align-items: center; 
       padding: 100px 0 60px;
@@ -213,9 +208,21 @@
       position: absolute; 
       width: 600px; 
       height: 600px;
-      background: radial-gradient(circle, rgba(11, 122, 107, 0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(6, 182, 166, 0.06) 0%, transparent 70%);
       top: -100px; 
       right: -100px; 
+      border-radius: 50%;
+      z-index: 0;
+    }
+    
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 200, 150, 0.05) 0%, transparent 70%);
+      bottom: -50px;
+      left: -50px;
       border-radius: 50%;
       z-index: 0;
     }
@@ -229,42 +236,55 @@
       z-index: 1; 
     }
     
-    .hero-content h1 {
-      font-size: clamp(2.5rem, 5vw, 3.5rem); 
-      color: var(--dark);
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
       margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(6, 182, 166, 0.1);
+    }
+    
+    .hero-content h1 {
+      font-size: clamp(2.4rem, 5vw, 3.4rem); 
+      color: var(--dark);
+      margin-bottom: 24px;
       line-height: 1.2;
-      letter-spacing: -1px;
+      letter-spacing: -0.5px;
     }
     
     .hero-content h1 .highlight { 
       color: var(--primary);
-      background: linear-gradient(120deg, var(--primary), var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
     
     .hero-content p {
-      font-size: 1.1rem; 
+      font-size: 1.05rem; 
       color: var(--text-light); 
-      line-height: 1.8;
-      margin-bottom: 32px;
-      max-width: 500px;
+      line-height: 1.85;
+      margin-bottom: 36px;
+      max-width: 520px;
     }
     
     .hero-buttons { 
       display: flex; 
       gap: 16px; 
       flex-wrap: wrap; 
-      margin-bottom: 48px;
+      margin-bottom: 56px;
     }
     
     .hero-stats { 
       display: flex; 
-      gap: 50px;
-      padding-top: 24px;
-      border-top: 2px solid var(--light-gray);
+      gap: 60px;
+      padding-top: 32px;
+      border-top: 2px solid rgba(6, 182, 166, 0.15);
     }
     
     .stat-item h3 { 
@@ -272,28 +292,28 @@
       font-size: 2.2rem; 
       color: var(--primary);
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     
     .stat-item p { 
-      font-size: 0.85rem; 
+      font-size: 0.8rem; 
       color: var(--text-light); 
-      font-weight: 500; 
+      font-weight: 600; 
       text-transform: uppercase; 
       letter-spacing: 0.8px;
     }
     
     .hero-image { 
-      position: relative; 
+      position: relative;
     }
     
     .main-hero-image { 
       width: 100%; 
       height: 520px; 
       object-fit: cover; 
-      border-radius: 12px; 
-      box-shadow: var(--shadow);
-      border: 1px solid var(--light-gray);
+      border-radius: 20px; 
+      box-shadow: 0 16px 48px rgba(6, 182, 166, 0.2);
+      border: none;
     }
 
     /* Section Styles */
@@ -306,17 +326,16 @@
     
     .section-tag {
       display: inline-block; 
-      background: linear-gradient(135deg, rgba(11, 122, 107, 0.1), rgba(11, 122, 107, 0.05));
+      background: linear-gradient(135deg, rgba(6, 182, 166, 0.1), rgba(20, 216, 198, 0.05));
       color: var(--primary);
       padding: 8px 18px; 
-      border-radius: 6px; 
+      border-radius: 50px; 
       font-size: 0.75rem; 
       font-weight: 700;
       letter-spacing: 1px; 
       text-transform: uppercase; 
       margin-bottom: 20px;
-      border: 1px solid var(--primary);
-      border-opacity: 0.2;
+      border: 1.5px solid var(--primary);
     }
     
     .section-header h2 { 
@@ -331,7 +350,7 @@
       font-size: 1.05rem; 
       max-width: 600px; 
       margin: 0 auto; 
-      line-height: 1.8;
+      line-height: 1.85;
     }
 
     /* Services Section */
@@ -339,26 +358,26 @@
     
     .services-grid { 
       display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
       gap: 32px;
     }
     
     .service-card {
-      background: var(--white);
-      border-radius: 10px; 
+      background: linear-gradient(135deg, #ffffff 0%, #f5fbfb 100%);
+      border-radius: 16px; 
       padding: 40px 32px;
-      border: 1px solid var(--light-gray);
+      border: 1.5px solid rgba(6, 182, 166, 0.1);
       transition: var(--transition); 
       position: relative; 
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 16px rgba(6, 182, 166, 0.08);
     }
     
     .service-card::before {
       content: ''; 
       position: absolute; 
       inset: 0;
-      background: linear-gradient(135deg, rgba(11, 122, 107, 0.05), transparent);
+      background: linear-gradient(135deg, rgba(6, 182, 166, 0.08), transparent);
       opacity: 0; 
       transition: var(--transition);
     }
@@ -366,7 +385,7 @@
     .service-card:hover { 
       transform: translateY(-8px);
       border-color: var(--primary);
-      box-shadow: var(--shadow);
+      box-shadow: 0 12px 32px rgba(6, 182, 166, 0.16);
     }
     
     .service-card:hover::before { opacity: 1; }
@@ -378,7 +397,7 @@
       transition: transform var(--transition);
     }
     
-    .service-card:hover .service-icon { transform: scale(1.1); }
+    .service-card:hover .service-icon { transform: scale(1.12) rotate(-5deg); }
     
     .service-card h3 { 
       font-size: 1.25rem; 
@@ -389,11 +408,11 @@
     .service-card p { 
       color: var(--text-light); 
       font-size: 0.95rem; 
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
     /* About Section */
-    .about { background: var(--light); }
+    .about { background: linear-gradient(180deg, #f5f9f8 0%, var(--cream) 100%); }
     
     .about .container { 
       display: grid; 
@@ -412,16 +431,17 @@
     }
     
     .about-image-gallery img { 
-      border-radius: 10px; 
-      box-shadow: var(--shadow-sm);
-      border: 1px solid var(--light-gray);
+      border-radius: 16px; 
+      box-shadow: 0 12px 32px rgba(6, 182, 166, 0.15);
+      border: none;
       width: 100%; 
       height: auto;
       transition: var(--transition);
     }
     
     .about-image-gallery img:hover {
-      box-shadow: var(--shadow);
+      box-shadow: 0 16px 48px rgba(6, 182, 166, 0.2);
+      transform: translateY(-4px);
     }
     
     .about-image-gallery img:first-child { 
@@ -453,20 +473,20 @@
       display: flex; 
       align-items: center; 
       gap: 12px;
-      background: var(--white);
+      background: linear-gradient(135deg, #ffffff 0%, #f8fcfc 100%);
       padding: 16px 20px; 
-      border-radius: 8px;
+      border-radius: 12px;
       font-size: 0.95rem; 
       font-weight: 500; 
       color: var(--text);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 8px rgba(6, 182, 166, 0.08);
       border-left: 3px solid var(--primary);
       transition: var(--transition);
     }
     
     .about-feature:hover { 
       transform: translateX(4px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 6px 16px rgba(6, 182, 166, 0.12);
     }
 
     /* Before/After Slider */
@@ -479,11 +499,11 @@
       max-width: 700px; 
       margin: 0 auto;
       position: relative; 
-      border-radius: 12px;
+      border-radius: 20px;
       overflow: hidden; 
-      box-shadow: var(--shadow);
-      user-select: none; 
-      border: 1px solid var(--light-gray);
+      box-shadow: 0 16px 48px rgba(6, 182, 166, 0.15);
+      user-select: none;
+      border: 1px solid rgba(6, 182, 166, 0.1);
     }
     
     .ba-image { 
@@ -514,9 +534,9 @@
       top: 0; 
       left: 50%; 
       transform: translateX(-50%);
-      width: 3px; 
+      width: 4px; 
       height: 100%;
-      background: var(--primary);
+      background: linear-gradient(180deg, var(--primary), var(--primary-light));
       z-index: 10;
     }
     
@@ -533,7 +553,7 @@
       display: flex; 
       align-items: center; 
       justify-content: center;
-      box-shadow: 0 6px 20px rgba(11, 122, 107, 0.4);
+      box-shadow: 0 8px 24px rgba(6, 182, 166, 0.35);
       cursor: grab;
       border: 3px solid var(--white);
       transition: var(--transition);
@@ -541,6 +561,7 @@
     
     .ba-handle:hover {
       transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 12px 32px rgba(6, 182, 166, 0.4);
     }
     
     .ba-handle:active { cursor: grabbing; }
@@ -555,11 +576,11 @@
       position: absolute; 
       top: 20px; 
       padding: 8px 16px;
-      background: rgba(15, 20, 25, 0.85);
+      background: rgba(26, 58, 58, 0.8);
       backdrop-filter: blur(10px);
       color: var(--white); 
-      border-radius: 6px; 
-      font-size: 0.78rem; 
+      border-radius: 50px; 
+      font-size: 0.75rem; 
       font-weight: 700;
       letter-spacing: 0.6px; 
       text-transform: uppercase;
@@ -579,9 +600,8 @@
 
     /* Trust Section */
     .trust-section {
-      background: linear-gradient(135deg, var(--dark) 0%, var(--dark-secondary) 100%);
+      background: linear-gradient(135deg, #e8f3f3 0%, #f0f5f5 100%);
       padding: 80px 0;
-      color: var(--white);
     }
     
     .trust-grid {
@@ -593,16 +613,17 @@
     
     .trust-card {
       text-align: center;
-      padding: 32px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 32px;
+      background: var(--white);
+      border-radius: 16px;
+      border: 1.5px solid rgba(6, 182, 166, 0.1);
       transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(6, 182, 166, 0.08);
     }
     
     .trust-card:hover {
-      background: rgba(11, 122, 107, 0.1);
       border-color: var(--primary);
+      box-shadow: 0 12px 32px rgba(6, 182, 166, 0.15);
       transform: translateY(-4px);
     }
     
@@ -613,18 +634,19 @@
     
     .trust-card h3 {
       font-size: 1.15rem;
-      color: var(--white);
+      color: var(--dark);
       margin-bottom: 10px;
     }
     
     .trust-card p {
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--text-light);
       font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     /* CTA Section */
     .cta-section {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       padding: 80px 0;
       text-align: center;
       color: var(--white);
@@ -637,29 +659,30 @@
     }
     
     .cta-section p {
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.95);
       font-size: 1.1rem;
       margin-bottom: 32px;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.8;
     }
     
     .cta-section .btn-primary {
       background: var(--white);
       color: var(--primary);
-      border-color: var(--white);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
     
     .cta-section .btn-primary:hover {
-      background: var(--light);
-      color: var(--primary);
+      background: rgba(255, 255, 255, 0.95);
+      transform: translateY(-3px);
     }
 
     /* Footer */
     footer {
       background: var(--dark);
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.75);
       padding: 60px 0 20px;
     }
     
@@ -669,23 +692,24 @@
       gap: 40px;
       margin-bottom: 40px;
       padding-bottom: 40px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(6, 182, 166, 0.15);
     }
     
     footer h4 {
       color: var(--white);
       margin-bottom: 16px;
       font-size: 1rem;
+      font-weight: 600;
     }
     
     footer p, footer a {
       font-size: 0.95rem;
       line-height: 1.8;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.75);
     }
     
     footer a:hover {
-      color: var(--primary);
+      color: var(--primary-light);
     }
     
     .footer-bottom {
@@ -715,13 +739,17 @@
     <div class="container">
       <div class="nav-logo">
         <div class="logo-icon">🦷</div>
-        <span>Dra. Martha Estrada</span>
+        Dra. Martha <span>Estrada</span>
       </div>
       <ul class="nav-links">
         <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#nosotros">Sobre Mí</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#porque">¿Por qué elegirnos?</a></li>
+        <li><a href="#testimonios">Testimonios</a></li>
         <li><a href="#resultados">Resultados</a></li>
-        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#cita">Agendar Cita</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a href="https://wa.me/573104235804?text=Hola%2C%20quiero%20agendar%20una%20cita%20con%20la%20Dra.%20Martha%20Estrada" target="_blank" class="nav-cta">📅 Cita</a></li>
       </ul>
       <div class="nav-social">
         <a href="https://www.instagram.com/Dra.MarthaEstrada1" target="_blank" title="Instagram">
@@ -738,26 +766,27 @@
   <section class="hero" id="inicio">
     <div class="container hero-container">
       <div class="hero-content">
-        <h1>Tu hijo merece una <span class="highlight">sonrisa</span> perfecta</h1>
-        <p>Con más de 15 años de experiencia, la Dra. Martha Estrada combina tecnología avanzada con un enfoque humano y cálido en cada tratamiento. Especialista en Odontología Infantil y Ortopedia Maxilar.</p>
+        <div class="hero-badge">⭐ Excelencia Dental en Cali</div>
+        <h1>Había una vez una <span class="highlight">sonrisa</span> que cambio el mundo</h1>
+        <p>Más de 15 años creando sonrisas saludables. Odontología infantil especializada con tecnología de vanguardia y un trato cálido que transforma cada visita en una experiencia positiva.</p>
         <div class="hero-buttons">
           <a href="https://wa.me/573104235804?text=Hola%2C%20quiero%20agendar%20una%20cita%20con%20la%20Dra.%20Martha%20Estrada" target="_blank" class="btn-primary">
-            <i class="fas fa-phone-alt"></i> Agendar Cita
+            <i class="fab fa-whatsapp"></i> Agendar por WhatsApp
           </a>
-          <a href="#servicios" class="btn-secondary">Conocer Más</a>
+          <a href="#servicios" class="btn-secondary">Ver Servicios →</a>
         </div>
         <div class="hero-stats">
           <div class="stat-item">
             <h3>15+</h3>
-            <p>Años de Experiencia</p>
+            <p>Años de experiencia</p>
           </div>
           <div class="stat-item">
-            <h3>500+</h3>
-            <p>Sonrisas Transformadas</p>
+            <h3>10k+</h3>
+            <p>Sonrisas creadas</p>
           </div>
           <div class="stat-item">
-            <h3>99%</h3>
-            <p>Satisfacción Pacientes</p>
+            <h3>100%</h3>
+            <p>Dedicación infantil</p>
           </div>
         </div>
       </div>
@@ -772,29 +801,29 @@
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">Nuestros Servicios</span>
-        <h2>Especialidades Dentales Pediátricas</h2>
-        <p>Tratamientos especializados diseñados específicamente para el bienestar integral de los más pequeños.</p>
+        <h2>Cuidado dental integral para los más pequeños</h2>
+        <p>Tratamientos especializados para el bienestar bucal de niños y adolescentes.</p>
       </div>
       <div class="services-grid">
         <div class="service-card reveal">
-          <span class="service-icon">👶</span>
+          <span class="service-icon">🦷</span>
           <h3>Odontología Infantil</h3>
-          <p>Tratamientos preventivos y restaurativos en un ambiente seguro, amigable y de confianza para los niños.</p>
+          <p>Tratamientos preventivos y restaurativos adaptados a los niños en un ambiente seguro y divertido.</p>
         </div>
         <div class="service-card reveal">
-          <span class="service-icon">📐</span>
+          <span class="service-icon">🧩</span>
           <h3>Ortopedia Maxilar</h3>
-          <p>Corrección temprana de problemas de alineación dental y desarrollo óseo para resultados óptimos.</p>
+          <p>Corrección temprana del crecimiento de los maxilares para un desarrollo armónico y una mordida saludable.</p>
         </div>
         <div class="service-card reveal">
           <span class="service-icon">✨</span>
           <h3>Ortodoncia Preventiva</h3>
-          <p>Diagnóstico oportuno y guía del crecimiento dental desde edades tempranas.</p>
+          <p>Diagnóstico oportuno para guiar la correcta posición de los dientes desde temprana edad.</p>
         </div>
         <div class="service-card reveal">
-          <span class="service-icon">🛡️</span>
-          <h3>Limpiezas Profesionales</h3>
-          <p>Protección y educación en higiene oral con técnicas gentiles y especializadas.</p>
+          <span class="service-icon">🪥</span>
+          <h3>Higiene Oral Infantil</h3>
+          <p>Educación y profilaxis dental para crear hábitos de cuidado bucal duraderos.</p>
         </div>
       </div>
     </div>
@@ -811,26 +840,18 @@
         </div>
       </div>
       <div class="about-content reveal-right">
-        <span class="section-tag">Sobre la Dra. Martha Estrada</span>
-        <h2>Profesional Certificada con Enfoque Humano</h2>
-        <p>Con más de 15 años de trayectoria profesional, la Dra. Martha Estrada es reconocida como una especialista de excelencia en Odontología Infantil y Ortopedia Maxilar en Cali. Su compromiso es transformar la experiencia dental de los niños en momentos positivos y educativos.</p>
-        <p>Certificada en las principales asociaciones odontológicas nacionales e internacionales, utiliza tecnología de punta combinada con técnicas comprobadas que garantizan resultados seguros y duraderos.</p>
+        <span class="section-tag">Sobre Nosotros</span>
+        <h2>Dra. Martha Estrada</h2>
+        <p>Con más de 15 años de trayectoria profesional, la Dra. Martha Estrada es una referente en Odontología Infantil y Ortopedia Maxilar en Cali. Combina experiencia clínica con un profundo compromiso hacia el bienestar integral de sus pequeños pacientes.</p>
+        <p>Su filosofía se centra en crear experiencias positivas para los niños, transformando cada visita al dentista en un momento agradable y educativo.</p>
         <div class="about-features">
-          <div class="about-feature">
-            <span>🎓</span> Odontóloga Certificada
-          </div>
-          <div class="about-feature">
-            <span>🏆</span> Especialista Pediátrica
-          </div>
-          <div class="about-feature">
-            <span>💡</span> Innovación Tecnológica
-          </div>
-          <div class="about-feature">
-            <span>❤️</span> Atención Personalizada
-          </div>
+          <div class="about-feature"><span>🎓</span> Especialista certificada</div>
+          <div class="about-feature"><span>👶</span> Enfoque pediátrico</div>
+          <div class="about-feature"><span>🏥</span> Tecnología moderna</div>
+          <div class="about-feature"><span>💚</span> Trato humanizado</div>
         </div>
-        <a href="https://wa.me/573104235804" target="_blank" class="btn-primary">
-          <i class="fas fa-phone-alt"></i> Contactar Directamente
+        <a href="https://wa.me/573104235804?text=Hola%2C%20quiero%20agendar%20una%20cita%20con%20la%20Dra.%20Martha%20Estrada" target="_blank" class="btn-primary">
+          <i class="fab fa-whatsapp"></i> Agenda por WhatsApp →
         </a>
       </div>
     </div>
@@ -841,8 +862,8 @@
     <div class="container">
       <div class="section-header reveal">
         <span class="section-tag">Resultados Reales</span>
-        <h2>Transformaciones que Hablan por Sí Solas</h2>
-        <p>Desliza para ver el antes y después. Resultados comprobados con Ortopedia Maxilar y Odontología Preventiva.</p>
+        <h2>Transformaciones que hablan por sí solas</h2>
+        <p>Desliza el control para ver el antes y después de nuestros pacientes. Resultados reales con ortopedia maxilar.</p>
       </div>
       <div class="before-after-wrapper reveal" id="baSlider">
         <img class="ba-image" src="https://images.unsplash.com/photo-1631217315881-112f2eba2fb1?w=700&q=80" alt="Odontóloga con paciente">
@@ -856,69 +877,80 @@
         <span class="ba-label before">Antes</span>
         <span class="ba-label after">Después</span>
       </div>
-      <p class="ba-caption">👆 Arrastra para comparar · <strong>18 meses de tratamiento integral</strong></p>
+      <p class="ba-caption">👆 Arrastra el control · <strong>Resultados con ortopedia maxilar y odontología preventiva</strong></p>
     </div>
   </section>
 
   <!-- TRUST -->
-  <section class="trust-section">
+  <section class="trust-section" id="porque">
     <div class="container">
-      <div class="section-header" style="margin-bottom: 60px;">
-        <h2 style="color: var(--white);">Por Qué Confiar en Nosotros</h2>
-        <p style="color: rgba(255, 255, 255, 0.8);">Elementos clave de nuestro compromiso con la excelencia.</p>
+      <div class="section-header">
+        <h2>¿Por qué elegirnos?</h2>
+        <p>Tu hijo merece la mejor atención y cuidado.</p>
       </div>
       <div class="trust-grid">
         <div class="trust-card reveal">
-          <div class="trust-card-icon">🏥</div>
-          <h3>Tecnología de Punta</h3>
-          <p>Equipos modernos y técnicas avanzadas para diagnósticos precisos y tratamientos efectivos.</p>
+          <div class="trust-card-icon">👩‍⚕️</div>
+          <h3>15+ Años de Experiencia</h3>
+          <p>Conocimiento y práctica que garantizan tratamientos seguros y efectivos para tu hijo.</p>
         </div>
         <div class="trust-card reveal">
-          <div class="trust-card-icon">👨‍👩‍👧</div>
-          <h3>Ambiente Seguro</h3>
+          <div class="trust-card-icon">🎨</div>
+          <h3>Ambiente Infantil</h3>
           <p>Espacios diseñados especialmente para que los niños se sientan cómodos y confiados.</p>
         </div>
         <div class="trust-card reveal">
-          <div class="trust-card-icon">🎯</div>
-          <h3>Planes Personalizados</h3>
-          <p>Tratamientos adaptados a cada caso individual con seguimiento integral.</p>
+          <div class="trust-card-icon">🔬</div>
+          <h3>Tecnología Avanzada</h3>
+          <p>Equipos de última generación para diagnósticos precisos y tratamientos efectivos.</p>
         </div>
         <div class="trust-card reveal">
-          <div class="trust-card-icon">⏰</div>
-          <h3>Puntualidad y Respeto</h3>
-          <p>Horarios flexibles y atención profesional que respeta tu tiempo valioso.</p>
+          <div class="trust-card-icon">❤️</div>
+          <h3>Trato con Amor</h3>
+          <p>Generamos confianza y relaciones positivas con cada niño desde la primera visita.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials section placeholder -->
+  <section style="background: var(--white); padding: 100px 0;" id="testimonios">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Testimonios</span>
+        <h2>Lo que dicen las familias</h2>
+        <p>La confianza y satisfacción de nuestros pacientes es nuestro mayor logro.</p>
       </div>
     </div>
   </section>
 
   <!-- CTA -->
-  <section class="cta-section" id="contacto">
+  <section class="cta-section" id="cita">
     <div class="container">
-      <h2>Comienza el Viaje Hacia una Sonrisa Perfecta</h2>
+      <h2>Comienza el viaje hacia una sonrisa perfecta</h2>
       <p>Agendar una cita con la Dra. Martha Estrada es el primer paso hacia la salud bucal integral de tu hijo.</p>
       <a href="https://wa.me/573104235804?text=Hola%2C%20quiero%20agendar%20una%20cita%20con%20la%20Dra.%20Martha%20Estrada" target="_blank" class="btn-primary">
-        <i class="fas fa-phone-alt"></i> Agendar Cita Ahora
+        <i class="fab fa-whatsapp"></i> Agendar Cita Ahora
       </a>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer>
+  <footer id="ubicacion">
     <div class="container">
       <div>
         <h4>Dra. Martha Estrada</h4>
-        <p>Especialista en Odontología Infantil y Ortopedia Maxilar. Más de 15 años cuidando sonrisas con profesionalismo y amor.</p>
+        <p>Especialista en Odontología Infantil y Ortopedia Maxilar. Más de 15 años cuidando la sonrisa de los más pequeños en Cali, Colombia.</p>
       </div>
       <div>
         <h4>Ubicación</h4>
-        <p>Holguines Trade Center<br>Cra. 100 #11-60, Ciudad Jardín<br>Cali, Valle del Cauca</p>
+        <p>Holguines Trade Center<br>Cra. 100 #11-60, Ciudad Jardín<br>Cali, Valle del Cauca<br>Consultorio 511 Torre Farallones</p>
       </div>
       <div>
         <h4>Contacto</h4>
         <p><i class="fas fa-phone"></i> +57 310 423 5804<br>
         <a href="mailto:infantilodonto@gmail.com"><i class="fas fa-envelope"></i> infantilodonto@gmail.com</a><br>
-        <a href="https://wa.me/573104235804" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
+        <a href="https://wa.me/573104235804" target="_blank" style="color: #14d8c6;"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
       </div>
       <div>
         <h4>Síguenos</h4>
@@ -937,7 +969,11 @@
     // Navbar scroll effect
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
-      navbar.style.boxShadow = window.scrollY > 50 ? 'var(--shadow-sm)' : 'none';
+      if (window.scrollY > 50) {
+        navbar.style.boxShadow = '0 4px 16px rgba(6, 182, 166, 0.12)';
+      } else {
+        navbar.style.boxShadow = '0 2px 12px rgba(6, 182, 166, 0.08)';
+      }
     });
 
     // Before/After Slider
@@ -967,7 +1003,7 @@
     baSlider.addEventListener('touchmove', updateSlider);
 
     // Reveal animations
-    const reveals = document.querySelectorAll('.reveal');
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {

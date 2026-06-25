@@ -873,21 +873,9 @@
 
   let imageData = null;       // base64 (sin prefijo)
   const WA_LINK = 'https://wa.me/573104235804?text=Hola%2C%20quiero%20una%20orientaci%C3%B3n%20sobre%20la%20sonrisa%20de%20mi%20hijo';
+  // Endpoint de tu backend (funciona en Vercel y Netlify con la config incluida).
+  const AI_ENDPOINT = '/api/analyze-smile';
 
-  const SYSTEM_PROMPT = `Eres un asistente de orientación dental del consultorio de la Dra. Martha Estrada, especialista en odontología infantil y ortopedia maxilar en Cali. Una madre o padre envió una foto de la sonrisa de su hijo/a para una primera orientación.
-
-Da una orientación CÁLIDA, BREVE y NO DIAGNÓSTICA en español, dirigida a la madre/padre, basada SOLO en lo visible en la foto.
-
-Reglas estrictas:
-- NO des diagnóstico definitivo ni afirmes condiciones clínicas con certeza. Usa lenguaje suave: "se observa", "podría", "vale la pena revisar".
-- NO prometas resultados ni curas. Aclara que solo una evaluación presencial con la Dra. Martha puede confirmar.
-- Comenta únicamente aspectos dentales visibles (alineación, espacios entre dientes, color, encías, mordida aparente). No comentes sobre ningún otro aspecto de la persona ni su apariencia general.
-- Menciona de forma natural cuál(es) de estos servicios podrían ser relevantes: Odontología Infantil, Ortopedia Maxilar, Ortodoncia Preventiva, Higiene Oral Infantil.
-- Tono tranquilizador, positivo y apto para una familia.
-- Si la imagen NO muestra con claridad la sonrisa o los dientes de un niño/a, responde amablemente que necesitas una foto clara, de frente, sonriendo y mostrando los dientes, y NO inventes observaciones.
-- Extensión: 110 a 170 palabras.
-- Estructura: un saludo breve, 2-3 observaciones suaves, qué servicio(s) podrían ayudar, y una invitación a agendar la evaluación. Sin encabezados.
-- Texto plano (sin markdown), pero puedes resaltar 2 o 3 frases clave envolviéndolas entre asteriscos dobles, **así**.`;
 
   const LOADING_MSGS = [
     'Analizando la sonrisa…',
@@ -953,25 +941,15 @@ Reglas estrictas:
     const msgTimer = setInterval(() => { mi = (mi + 1) % LOADING_MSGS.length; if (msgEl) { msgEl.style.opacity = 0; setTimeout(() => { msgEl.textContent = LOADING_MSGS[mi]; msgEl.style.opacity = 1; }, 250); } }, 1800);
 
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      // Llama a TU backend (función serverless) que guarda la clave de forma segura.
+      const res = await fetch(AI_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT,
-          messages: [{
-            role: 'user',
-            content: [
-              { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: imageData } },
-              { type: 'text', text: 'Aquí está la foto de la sonrisa de mi hijo/a. Por favor dame una orientación inicial.' }
-            ]
-          }]
-        })
+        body: JSON.stringify({ image: imageData })
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+      const text = (data.text || '').trim();
       clearInterval(msgTimer);
       if (text) {
         aiBody.innerHTML = '<div class="ai-output">' + renderText(text) + '</div>';
